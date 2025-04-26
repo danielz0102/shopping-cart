@@ -1,6 +1,6 @@
+import styles from './Shop.module.css'
 import { useProducts } from '@/hooks/products'
-import styles from '@/styles/Shop.module.css'
-import Product from './Product'
+import Product from '../Product'
 
 export default function Shop() {
   const { products, loading, error } = useProducts()

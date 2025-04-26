@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Product from './Product'
+import Product from '.'
 
 describe('Product', () => {
   it('renders props correctly', () => {
