@@ -8,6 +8,6 @@
   - [x] React Router
 - [x] Set up folder structure
 - [x] Add reset CSS file
-- [] Fetch items from [FakeStore API](https://fakestoreapi.com/)
+- [x] Fetch items from [FakeStore API](https://fakestoreapi.com/)
 - [] Create UI
 - [] Deploy
