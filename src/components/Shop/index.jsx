@@ -10,7 +10,11 @@ export default function Shop() {
   }
 
   if (error) {
-    return <h1>Error fetching products</h1>
+    return <h1>Oops... something went wrong</h1>
+  }
+
+  if (products.length === 0) {
+    return <h1>No products found</h1>
   }
 
   return (
