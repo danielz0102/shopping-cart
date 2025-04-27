@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
 import { useProducts } from '@/hooks/products'
@@ -27,50 +27,48 @@ vi.mock('@/hooks/products', () => ({
   useProducts: vi.fn(),
 }))
 
-describe('Shop', () => {
-  it('renders all products', () => {
-    vi.mocked(useProducts).mockReturnValue({
-      products: mockProducts,
-      loading: false,
-      error: false,
-    })
-
-    render(<Shop />)
-    expect(screen.getByTestId('1')).toBeInTheDocument()
-    expect(screen.getByTestId('2')).toBeInTheDocument()
-    expect(screen.getByTestId('3')).toBeInTheDocument()
+test('renders all products', () => {
+  vi.mocked(useProducts).mockReturnValue({
+    products: mockProducts,
+    loading: false,
+    error: false,
   })
 
-  it('renders loading state', () => {
-    vi.mocked(useProducts).mockReturnValue({
-      products: [],
-      loading: true,
-      error: false,
-    })
+  render(<Shop />)
+  expect(screen.getByTestId('1')).toBeInTheDocument()
+  expect(screen.getByTestId('2')).toBeInTheDocument()
+  expect(screen.getByTestId('3')).toBeInTheDocument()
+})
 
-    render(<Shop />)
-    expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
+test('renders loading state', () => {
+  vi.mocked(useProducts).mockReturnValue({
+    products: [],
+    loading: true,
+    error: false,
   })
 
-  it('renders error state', () => {
-    vi.mocked(useProducts).mockReturnValue({
-      products: [],
-      loading: false,
-      error: true,
-    })
+  render(<Shop />)
+  expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
+})
 
-    render(<Shop />)
-    expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument()
+test('renders error state', () => {
+  vi.mocked(useProducts).mockReturnValue({
+    products: [],
+    loading: false,
+    error: true,
   })
 
-  it('renders empty state', () => {
-    vi.mocked(useProducts).mockReturnValue({
-      products: [],
-      loading: false,
-      error: false,
-    })
+  render(<Shop />)
+  expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument()
+})
 
-    render(<Shop />)
-    expect(screen.getByText(/No products found/i)).toBeInTheDocument()
+test('renders empty state', () => {
+  vi.mocked(useProducts).mockReturnValue({
+    products: [],
+    loading: false,
+    error: false,
   })
+
+  render(<Shop />)
+  expect(screen.getByText(/No products found/i)).toBeInTheDocument()
 })
