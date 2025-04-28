@@ -10,13 +10,26 @@ const mockProduct = {
   price: 19.99,
 }
 
-test('returns null if product is empty', () => {
-  render(<Product product={{}} />)
-  expect(screen.queryByRole('img')).toBeNull()
+test('throws an error if product is not correct or is not provided', () => {
+  expect(() => render(<Product product={123} addToCart={() => {}} />)).toThrow()
+  expect(() =>
+    render(<Product product={'{}'} addToCart={() => {}} />),
+  ).toThrow()
+  expect(() => render(<Product product={{}} addToCart={() => {}} />)).toThrow()
+  expect(() => render(<Product product={[]} addToCart={() => {}} />)).toThrow()
+  expect(() => render(<Product product={0} addToCart={() => {}} />)).toThrow()
+  expect(() => render(<Product addToCart={() => {}} />)).toThrow()
+})
+
+test('throws an error if addToCart is not correct or is not provided', () => {
+  expect(() =>
+    render(<Product product={mockProduct} addToCart={123} />),
+  ).toThrow()
+  expect(() => render(<Product product={mockProduct} />)).toThrow()
 })
 
 test('renders product info', () => {
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   expect(screen.getByRole('img')).toHaveAttribute('src', mockProduct.image)
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
@@ -40,7 +53,7 @@ test('calls addToCart when button is clicked', async () => {
 
 test('handles the quantity of the item', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
   expect(quantity).toHaveValue(1)
@@ -59,7 +72,7 @@ test('handles the quantity of the item', async () => {
 
 test('does not decrement quantity below 1', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
   expect(quantity).toHaveValue(1)
@@ -73,7 +86,7 @@ test('does not decrement quantity below 1', async () => {
 
 test('changes the quantity by user input', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -86,7 +99,7 @@ test('changes the quantity by user input', async () => {
 
 test('does not allow negative quantity input', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -106,7 +119,7 @@ test('does not allow negative quantity input', async () => {
 
 test('ignores non-numeric quantity inputs', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -123,7 +136,7 @@ test('ignores non-numeric quantity inputs', async () => {
 
 test('resets quantity to 1 on invalid input characters', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
   await user.type(quantity, '5')
@@ -131,14 +144,13 @@ test('resets quantity to 1 on invalid input characters', async () => {
   expect(quantity).toHaveValue(15)
 
   await user.type(quantity, 'e+-')
-  // Resets on blur
   await user.click(document.body)
 
   expect(quantity).toHaveValue(1)
 })
 
 test('has aria-live attribute for quantity', () => {
-  render(<Product product={mockProduct} />)
+  render(<Product product={mockProduct} addToCart={() => {}} />)
 
   const quantity = screen.getByRole('spinbutton')
 

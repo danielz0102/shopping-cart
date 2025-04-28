@@ -1,11 +1,27 @@
 import styles from './Product.module.css'
+import z from 'zod'
 import { useState } from 'react'
+
+const productSchema = z.object({
+  image: z.string().url(),
+  title: z.string(),
+  description: z.string(),
+  price: z.number(),
+})
+const addToCartSchema = z.function()
 
 export default function Product({ product, addToCart }) {
   const [quantity, setQuantity] = useState(1)
 
-  if (!product || Object.keys(product).length === 0) {
-    return null
+  const productIsValid = productSchema.safeParse(product)
+  const addToCartIsValid = addToCartSchema.safeParse(addToCart)
+
+  if (!productIsValid.success) {
+    throw new Error('product is not valid')
+  }
+
+  if (!addToCartIsValid.success) {
+    throw new Error('addToCart must be a function')
   }
 
   function increment() {
