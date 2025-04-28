@@ -35,6 +35,7 @@ export default function Cart() {
               <p>${product.price}</p>
               <p>Quantity: {product.quantity}</p>
               <div>
+                <button onClick={() => utils.remove(product.id)}>Remove</button>
                 <button
                   aria-label="Increase"
                   onClick={() => utils.increase(product.id)}

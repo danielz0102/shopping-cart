@@ -105,6 +105,19 @@ test('must have buttons to increase and decrease quantity', async () => {
   expect(decrease).toHaveBeenCalledWith(mockCart[0].id)
 })
 
+test('has a button to remove the product', async () => {
+  const remove = vi.fn()
+  const user = userEvent.setup()
+  renderCart({ cart: [mockCart[0]], utils: { remove } })
+  const button = screen.getByRole('button', { name: /cart/i })
+
+  await user.click(button)
+  const removeBtn = screen.getByRole('button', { name: /remove/i })
+
+  await user.click(removeBtn)
+  expect(remove).toHaveBeenCalledWith(mockCart[0].id)
+})
+
 test('must show a link to checkout', async () => {
   const user = userEvent.setup()
   renderCart({ cart: mockCart, utils: {} })
