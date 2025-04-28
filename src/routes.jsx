@@ -16,6 +16,10 @@ export const router = createBrowserRouter([
         path: '/shop',
         element: <Shop />,
       },
+      {
+        path: '/checkout',
+        element: <div>Checkout</div>,
+      },
     ],
   },
 ])

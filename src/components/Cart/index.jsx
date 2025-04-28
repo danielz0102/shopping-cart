@@ -1,31 +1,12 @@
-import z from 'zod'
-import { useState, useRef } from 'react'
+import { useContext, useRef } from 'react'
+import { CartContext } from '@/contexts'
+import { Link } from 'react-router-dom'
 
-const cartProductSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  image: z.string().url(),
-  price: z.number(),
-  quantity: z.number(),
-})
-const cartSchema = z.array(cartProductSchema).optional()
-const checkoutSchema = z.function()
-
-export default function Cart({ initialProducts, onCheckout }) {
-  const [cart, setCart] = useState(initialProducts)
+export default function Cart() {
+  const { cart, utils } = useContext(CartContext)
   const sidebar = useRef(null)
 
-  const productsAreValid = cartSchema.safeParse(initialProducts)
-  const checkoutIsValid = checkoutSchema.safeParse(onCheckout)
-  const quantity = cart ? cart.length : 0
-
-  if (!productsAreValid.success) {
-    throw new Error('products must be an array of products')
-  }
-
-  if (!checkoutIsValid.success) {
-    throw new Error('onCheckout must be a function')
-  }
+  const quantity = cart.length
 
   function handleCartClick() {
     if (sidebar.current.open) {
@@ -34,36 +15,6 @@ export default function Cart({ initialProducts, onCheckout }) {
     }
 
     sidebar.current.show()
-  }
-
-  function increase(id) {
-    const newCart = cart.map((product) => {
-      if (product.id === id) {
-        return { ...product, quantity: product.quantity + 1 }
-      }
-      return product
-    })
-
-    setCart(newCart)
-  }
-
-  function decrease(id) {
-    const product = cart.find((product) => product.id === id)
-
-    if (product.quantity <= 1) {
-      const newCart = cart.filter((product) => product.id !== id)
-      setCart(newCart)
-      return
-    }
-
-    const newCart = cart.map((product) => {
-      if (product.id === id) {
-        return { ...product, quantity: product.quantity - 1 }
-      }
-      return product
-    })
-
-    setCart(newCart)
   }
 
   return (
@@ -86,13 +37,13 @@ export default function Cart({ initialProducts, onCheckout }) {
               <div>
                 <button
                   aria-label="Increase"
-                  onClick={() => increase(product.id)}
+                  onClick={() => utils.increase(product.id)}
                 >
                   +
                 </button>
                 <button
                   aria-label="Decrease"
-                  onClick={() => decrease(product.id)}
+                  onClick={() => utils.decrease(product.id)}
                 >
                   -
                 </button>
@@ -100,7 +51,7 @@ export default function Cart({ initialProducts, onCheckout }) {
             </li>
           ))}
         </ul>
-        <button onClick={onCheckout}>Checkout</button>
+        <Link to="/checkout">Checkout</Link>
       </dialog>
     </>
   )

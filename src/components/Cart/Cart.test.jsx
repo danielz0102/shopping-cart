@@ -1,9 +1,12 @@
 import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Cart from '.'
+import { MemoryRouter } from 'react-router-dom'
 
-const mockProducts = [
+import Cart from '.'
+import { CartContext } from '@/contexts'
+
+const mockCart = [
   {
     id: 1,
     title: 'Product 1',
@@ -27,74 +30,26 @@ const mockProducts = [
   },
 ]
 
-test('throws an error if initialProducts is not an array', () => {
-  expect(() =>
-    render(<Cart initialProducts={{}} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(<Cart initialProducts={'{}'} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(<Cart initialProducts={''} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(<Cart initialProducts={123} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(<Cart initialProducts={0} onCheckout={() => {}} />),
-  ).toThrow()
-})
-
-test('throws an error if initialProducts is not an array of products', () => {
-  expect(() =>
-    render(<Cart initialProducts={[1, 2, 3]} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(<Cart initialProducts={[{}]} onCheckout={() => {}} />),
-  ).toThrow()
-  expect(() =>
-    render(
-      <Cart initialProducts={[{ title: 'title' }]} onCheckout={() => {}} />,
-    ),
-  ).toThrow()
-})
-
-test('throws an error if onCheckout function is not passed', () => {
-  expect(() => render(<Cart initialProducts={mockProducts} />)).toThrow()
-})
-
-test('displays 0 when no products are passed', () => {
-  const badCarts = [
-    <Cart onCheckout={() => {}} />,
-    <Cart initialProducts={[]} onCheckout={() => {}} />,
-  ]
-  render(badCarts)
-
-  const buttons = screen.getAllByText(0)
-
-  expect(buttons).toHaveLength(badCarts.length)
-})
-
-test('still displays the cart when no products are passed', () => {
-  render(<Cart onCheckout={() => {}} />)
-  screen.getByRole('button')
+test('displays 0 if there are no products', () => {
+  renderCart({ cart: [], utils: {} })
+  screen.getByText(0)
 })
 
 test('must be a button', () => {
-  render(<Cart initialProducts={[]} onCheckout={() => {}} />)
+  renderCart({ cart: [], utils: {} })
   screen.getByRole('button', { name: /cart/i })
 })
 
 test('displays the quantity of items passed', () => {
-  render(<Cart initialProducts={mockProducts} onCheckout={() => {}} />)
+  renderCart({ cart: mockCart, utils: {} })
   screen.getByRole('button', {
-    name: new RegExp(`cart.*${mockProducts.length}`, 'i'),
+    name: new RegExp(`cart.*${mockCart.length}`, 'i'),
   })
 })
 
 test('displays items within sidebar when is clicked', async () => {
   const user = userEvent.setup()
-  render(<Cart initialProducts={mockProducts} onCheckout={() => {}} />)
+  renderCart({ cart: mockCart, utils: {} })
   const button = screen.getByRole('button', { name: /cart/i })
 
   await user.click(button)
@@ -105,7 +60,7 @@ test('displays items within sidebar when is clicked', async () => {
 
 test('does not display any items if no products are passed', async () => {
   const user = userEvent.setup()
-  render(<Cart onCheckout={() => {}} />)
+  renderCart({ cart: [], utils: {} })
   const button = screen.getByRole('button', { name: /cart/i })
 
   await user.click(button)
@@ -116,7 +71,7 @@ test('does not display any items if no products are passed', async () => {
 
 test('hides items and sidebar when is clicked again', async () => {
   const user = userEvent.setup()
-  render(<Cart initialProducts={mockProducts} onCheckout={() => {}} />)
+  renderCart({ cart: mockCart, utils: {} })
   const button = screen.getByRole('button', { name: /cart/i })
 
   await user.click(button)
@@ -133,73 +88,48 @@ test('hides items and sidebar when is clicked again', async () => {
 })
 
 test('must have buttons to increase and decrease quantity', async () => {
-  const mockProduct = {
-    id: 1,
-    title: 'Product 1',
-    image: 'https://example.com/image1.jpg',
-    price: 10,
-    quantity: 3,
-  }
+  const increase = vi.fn()
+  const decrease = vi.fn()
   const user = userEvent.setup()
-  render(<Cart initialProducts={[mockProduct]} onCheckout={() => {}} />)
+  renderCart({ cart: [mockCart[0]], utils: { increase, decrease } })
   const button = screen.getByRole('button', { name: /cart/i })
 
   await user.click(button)
   const increaseBtn = screen.getByRole('button', { name: /increase/i })
   const decreaseBtn = screen.getByRole('button', { name: /decrease/i })
-  const quantity = screen.getByText(/quantity/i)
 
   await user.click(increaseBtn)
-  expect(quantity).toHaveTextContent(`${mockProduct.quantity + 1}`, {
-    exact: false,
-  })
+  expect(increase).toHaveBeenCalledWith(mockCart[0].id)
 
   await user.click(decreaseBtn)
-  await user.click(decreaseBtn)
-  expect(quantity).toHaveTextContent(`${mockProduct.quantity - 1}`, {
-    exact: false,
-  })
+  expect(decrease).toHaveBeenCalledWith(mockCart[0].id)
 })
 
-test('removes product if quantity drops below 1', async () => {
-  const mockProduct = {
-    id: 1,
-    title: 'Product 1',
-    image: 'https://example.com/image1.jpg',
-    price: 10,
-    quantity: 1,
-  }
+test('must show a link to checkout', async () => {
   const user = userEvent.setup()
-  render(<Cart initialProducts={[mockProduct]} onCheckout={() => {}} />)
-  const button = screen.getByRole('button', { name: /cart/i })
-  await user.click(button)
-  const decreaseBtn = screen.getByRole('button', { name: /decrease/i })
-
-  await user.click(decreaseBtn)
-
-  expect(screen.queryByText(mockProduct.title)).not.toBeInTheDocument()
-})
-
-test('must have a checkout button', async () => {
-  const user = userEvent.setup()
-  const handleCheckout = vi.fn()
-  render(<Cart initialProducts={mockProducts} onCheckout={handleCheckout} />)
+  renderCart({ cart: mockCart, utils: {} })
   const button = screen.getByRole('button', { name: /cart/i })
 
   await user.click(button)
 
-  const checkoutBtn = screen.getByRole('button', { name: /checkout/i })
-
-  await user.click(checkoutBtn)
-
-  expect(handleCheckout).toHaveBeenCalled()
+  screen.getByRole('link', { name: /checkout/i })
 })
 
 function getProductsElements() {
-  return mockProducts.map((product) => ({
+  return mockCart.map((product) => ({
     title: screen.getByText(product.title),
     price: screen.getByText(`$${product.price}`),
     image: screen.getByRole('img', { name: product.title }),
     quantity: screen.getByText(`Quantity: ${product.quantity}`),
   }))
+}
+
+function renderCart(value) {
+  render(
+    <MemoryRouter>
+      <CartContext.Provider value={value}>
+        <Cart />
+      </CartContext.Provider>
+    </MemoryRouter>,
+  )
 }
