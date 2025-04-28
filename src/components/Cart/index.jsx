@@ -53,6 +53,7 @@ export default function Cart() {
           ))}
         </ul>
         <Link to="/checkout">Checkout</Link>
+        <button onClick={utils.clear}>Clear</button>
       </dialog>
     </>
   )

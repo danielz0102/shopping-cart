@@ -56,5 +56,9 @@ export function useCart() {
     setCart(newCart)
   }
 
-  return { cart, setCart, utils: { add, remove, increase, decrease } }
+  function clear() {
+    setCart([])
+  }
+
+  return { cart, setCart, utils: { add, remove, increase, decrease, clear } }
 }

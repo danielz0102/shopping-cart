@@ -118,6 +118,19 @@ test('has a button to remove the product', async () => {
   expect(remove).toHaveBeenCalledWith(mockCart[0].id)
 })
 
+test('has a button to remove all products', async () => {
+  const clear = vi.fn()
+  const user = userEvent.setup()
+  renderCart({ cart: mockCart, utils: { clear } })
+  const button = screen.getByRole('button', { name: /cart/i })
+
+  await user.click(button)
+  const clearBtn = screen.getByRole('button', { name: /clear/i })
+
+  await user.click(clearBtn)
+  expect(clear).toHaveBeenCalled()
+})
+
 test('must show a link to checkout', async () => {
   const user = userEvent.setup()
   renderCart({ cart: mockCart, utils: {} })
