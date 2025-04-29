@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import Product from '.'
-import { CartContext } from '@/contexts'
+import { CartContext } from '@/providers/contexts'
 
 const mockProduct = {
   id: 1,

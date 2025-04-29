@@ -4,31 +4,8 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
 import Cart from '.'
+import mockCart from '/tests/mocks/cart'
 import CartProvider from '@/providers/CartProvider'
-
-const mockCart = [
-  {
-    id: 1,
-    title: 'Product 1',
-    image: 'https://example.com/image1.jpg',
-    price: 10,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    title: 'Product 2',
-    image: 'https://example.com/image2.jpg',
-    price: 20,
-    quantity: 2,
-  },
-  {
-    id: 3,
-    title: 'Product 3',
-    image: 'https://example.com/image3.jpg',
-    price: 30,
-    quantity: 3,
-  },
-]
 
 test('displays 0 if there are no products', () => {
   renderCart()

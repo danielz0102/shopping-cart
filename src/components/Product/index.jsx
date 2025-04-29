@@ -1,7 +1,7 @@
 import styles from './Product.module.css'
 import { useState, useContext } from 'react'
 import { productSchema } from '@/schemas/product'
-import { CartContext } from '@/contexts'
+import { CartContext } from '@/providers/contexts'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
