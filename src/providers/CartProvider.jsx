@@ -1,4 +1,4 @@
-import { useCart } from '@/hooks/cart'
+import { useCart } from '@/hooks/useCart'
 import { CartContext } from './contexts'
 
 export default function CartProvider({ children, initialProducts = [] }) {

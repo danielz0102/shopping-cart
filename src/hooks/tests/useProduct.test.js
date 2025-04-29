@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
 
-import { useProducts } from '../products'
+import { useProducts } from '../useProducts'
 import { getProducts } from '@/services/fakeStore'
 
 vi.mock('@/services/fakeStore')

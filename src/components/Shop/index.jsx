@@ -1,5 +1,5 @@
 import styles from './Shop.module.css'
-import { useProducts } from '@/hooks/products'
+import { useProducts } from '@/hooks/useProducts'
 import Product from '../Product'
 
 export default function Shop() {

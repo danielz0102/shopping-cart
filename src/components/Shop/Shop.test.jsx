@@ -1,7 +1,7 @@
 import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import { useProducts } from '@/hooks/products'
+import { useProducts } from '@/hooks/useProducts'
 import Shop from '.'
 
 const mockProducts = [
@@ -23,7 +23,7 @@ vi.mock('../Product', () => ({
   default: ({ product }) => <div data-testid={product.id}>{product.title}</div>,
 }))
 
-vi.mock('@/hooks/products')
+vi.mock('@/hooks/useProducts')
 
 test('renders all products', () => {
   vi.mocked(useProducts).mockReturnValue({

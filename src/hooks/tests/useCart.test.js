@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 
-import { useCart } from '../cart'
+import { useCart } from '../useCart'
 import mockCart from '/tests/mocks/cart'
 
 describe('initialProducts prop', () => {
