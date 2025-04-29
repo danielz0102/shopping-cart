@@ -17,6 +17,10 @@ export default function Cart() {
     sidebar.current.show()
   }
 
+  function closeSidebar() {
+    sidebar.current.close()
+  }
+
   return (
     <>
       <button
@@ -26,6 +30,9 @@ export default function Cart() {
         <span>{quantity}</span>
       </button>
       <dialog ref={sidebar}>
+        <button aria-label="Close" onClick={closeSidebar}>
+          x
+        </button>
         <h2>{quantity > 0 ? 'Your products' : 'The car is empty'}</h2>
         <ul>
           {cart?.map((product) => (

@@ -133,6 +133,21 @@ test('must not show a link to checkout if no products are passed', async () => {
   ).not.toBeInTheDocument()
 })
 
+test('has a button to close the sidebar', async () => {
+  const user = userEvent.setup()
+  renderCart(mockCart)
+  const button = screen.getByRole('button', { name: /cart/i })
+
+  await user.click(button)
+
+  const closeBtn = screen.getByRole('button', { name: /close/i })
+  const sidebar = screen.getByRole('dialog')
+
+  await user.click(closeBtn)
+
+  expect(sidebar).not.toBeVisible()
+})
+
 function getProductsElements() {
   return mockCart.map((product) => ({
     title: screen.getByText(product.title),
