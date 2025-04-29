@@ -13,8 +13,8 @@ test('has links to home and shop page', () => {
       <Navbar />
     </MemoryRouter>,
   )
-  screen.getByText(/home/i)
-  screen.getByText(/shop/i)
+  screen.getByRole('link', { name: /home/i })
+  screen.getByRole('link', { name: /shop/i })
 })
 
 test('displays the cart', () => {
@@ -23,5 +23,5 @@ test('displays the cart', () => {
       <Navbar />
     </MemoryRouter>,
   )
-  screen.getByTestId(1)
+  screen.getByTestId(1, { name: /cart/i })
 })
