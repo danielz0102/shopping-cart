@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react'
-import { CartContext } from '@/contexts'
+import { CartContext } from '@/providers/contexts'
 import { Link } from 'react-router-dom'
 
 export default function Cart() {
@@ -52,7 +52,7 @@ export default function Cart() {
             </li>
           ))}
         </ul>
-        <Link to="/checkout">Checkout</Link>
+        {quantity > 0 && <Link to="/checkout">Checkout</Link>}
         <button onClick={utils.clear}>Clear</button>
       </dialog>
     </>
