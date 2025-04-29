@@ -23,9 +23,7 @@ vi.mock('../Product', () => ({
   default: ({ product }) => <div data-testid={product.id}>{product.title}</div>,
 }))
 
-vi.mock('@/hooks/products', () => ({
-  useProducts: vi.fn(),
-}))
+vi.mock('@/hooks/products')
 
 test('renders all products', () => {
   vi.mocked(useProducts).mockReturnValue({
