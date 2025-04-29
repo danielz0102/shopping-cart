@@ -1,27 +1,16 @@
 import styles from './Product.module.css'
-import z from 'zod'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { productSchema } from '@/schemas/product'
+import { CartContext } from '@/contexts'
 
-const productSchema = z.object({
-  image: z.string().url(),
-  title: z.string(),
-  description: z.string(),
-  price: z.number(),
-})
-const addToCartSchema = z.function()
-
-export default function Product({ product, addToCart }) {
+export default function Product({ product }) {
+  const { utils } = useContext(CartContext)
   const [quantity, setQuantity] = useState(1)
 
   const productIsValid = productSchema.safeParse(product)
-  const addToCartIsValid = addToCartSchema.safeParse(addToCart)
 
   if (!productIsValid.success) {
     throw new Error('product is not valid')
-  }
-
-  if (!addToCartIsValid.success) {
-    throw new Error('addToCart must be a function')
   }
 
   function increment() {
@@ -53,7 +42,9 @@ export default function Product({ product, addToCart }) {
       <h2>{product.title}</h2>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={addToCart}>Add to Cart</button>
+      <button onClick={() => utils.add({ id: product.id, quantity })}>
+        Add to Cart
+      </button>
       <div>
         <label htmlFor="quantity">Quantity</label>
         <input

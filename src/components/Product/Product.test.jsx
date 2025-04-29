@@ -1,9 +1,12 @@
 import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
 import Product from '.'
+import { CartContext } from '@/contexts'
 
 const mockProduct = {
+  id: 1,
   image: 'https://example.com/image.jpg',
   title: 'Test Product',
   description: 'This is a test product.',
@@ -11,25 +14,16 @@ const mockProduct = {
 }
 
 test('throws an error if product is not correct or is not provided', () => {
-  expect(() => render(<Product product={123} addToCart={() => {}} />)).toThrow()
-  expect(() =>
-    render(<Product product={'{}'} addToCart={() => {}} />),
-  ).toThrow()
-  expect(() => render(<Product product={{}} addToCart={() => {}} />)).toThrow()
-  expect(() => render(<Product product={[]} addToCart={() => {}} />)).toThrow()
-  expect(() => render(<Product product={0} addToCart={() => {}} />)).toThrow()
-  expect(() => render(<Product addToCart={() => {}} />)).toThrow()
-})
-
-test('throws an error if addToCart is not correct or is not provided', () => {
-  expect(() =>
-    render(<Product product={mockProduct} addToCart={123} />),
-  ).toThrow()
-  expect(() => render(<Product product={mockProduct} />)).toThrow()
+  expect(() => renderProduct(123)).toThrow()
+  expect(() => renderProduct('{}')).toThrow()
+  expect(() => renderProduct({})).toThrow()
+  expect(() => renderProduct([])).toThrow()
+  expect(() => renderProduct(0)).toThrow()
+  expect(() => renderProduct()).toThrow()
 })
 
 test('renders product info', () => {
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   expect(screen.getByRole('img')).toHaveAttribute('src', mockProduct.image)
   expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
@@ -39,21 +33,22 @@ test('renders product info', () => {
   expect(screen.getByText(`$${mockProduct.price}`)).toBeInTheDocument()
 })
 
-test('calls addToCart when button is clicked', async () => {
+test('calls add function when button is clicked', async () => {
   const user = userEvent.setup()
-  const addToCart = vi.fn()
-
-  render(<Product product={mockProduct} addToCart={addToCart} />)
+  const add = renderProduct(mockProduct)
 
   const button = screen.getByRole('button', { name: /add to cart/i })
   await user.click(button)
 
-  expect(addToCart).toHaveBeenCalled()
+  expect(add).toHaveBeenCalledWith({
+    id: mockProduct.id,
+    quantity: 1,
+  })
 })
 
 test('handles the quantity of the item', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
   expect(quantity).toHaveValue(1)
@@ -72,7 +67,7 @@ test('handles the quantity of the item', async () => {
 
 test('does not decrement quantity below 1', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
   expect(quantity).toHaveValue(1)
@@ -86,7 +81,7 @@ test('does not decrement quantity below 1', async () => {
 
 test('changes the quantity by user input', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -99,7 +94,7 @@ test('changes the quantity by user input', async () => {
 
 test('does not allow negative quantity input', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -119,7 +114,7 @@ test('does not allow negative quantity input', async () => {
 
 test('ignores non-numeric quantity inputs', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
 
@@ -136,7 +131,7 @@ test('ignores non-numeric quantity inputs', async () => {
 
 test('resets quantity to 1 on invalid input characters', async () => {
   const user = userEvent.setup()
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
   await user.type(quantity, '5')
@@ -150,9 +145,21 @@ test('resets quantity to 1 on invalid input characters', async () => {
 })
 
 test('has aria-live attribute for quantity', () => {
-  render(<Product product={mockProduct} addToCart={() => {}} />)
+  renderProduct(mockProduct)
 
   const quantity = screen.getByRole('spinbutton')
 
   expect(quantity).toHaveAttribute('aria-live', 'polite')
 })
+
+function renderProduct(product) {
+  let add = vi.fn()
+
+  render(
+    <CartContext.Provider value={{ utils: { add } }}>
+      <Product product={product} />
+    </CartContext.Provider>,
+  )
+
+  return add
+}

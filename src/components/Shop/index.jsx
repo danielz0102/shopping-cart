@@ -20,7 +20,7 @@ export default function Shop() {
   return (
     <main className={styles.shop}>
       {products.map((product) => (
-        <Product key={product.id} product={product} />
+        <Product key={product.id} product={product} addToCart={() => {}} />
       ))}
     </main>
   )
