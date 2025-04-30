@@ -1,8 +1,8 @@
-import { productSchema } from './product'
+import { cartItemSchema } from './cartItem'
 import z from 'zod'
 
-export const cartSchema = z.array(productSchema).optional()
+export const cartSchema = z.array(cartItemSchema).optional()
 
 export function validateCart(cart) {
-  return cartSchema.safeParse(cart)
+  cartSchema.parse(cart)
 }

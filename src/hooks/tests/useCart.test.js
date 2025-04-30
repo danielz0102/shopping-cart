@@ -4,16 +4,18 @@ import { renderHook, act } from '@testing-library/react'
 import { useCart } from '../useCart'
 import mockCart from '/tests/mocks/cart'
 
-describe('initialProducts prop', () => {
-  it('throws an error if is not an array', () => {
-    expect(() => renderHook(() => useCart({}))).toThrow()
-    expect(() => renderHook(() => useCart(123))).toThrow()
-    expect(() => renderHook(() => useCart('123'))).toThrow()
-  })
+const mockProduct = {
+  id: 4,
+  title: 'Product 4',
+  description: 'Description 4',
+  image: 'https://example.com/image5.jpg',
+  price: 40,
+}
 
-  it('throws an error if is not an array of products', () => {
+describe('initialCart prop', () => {
+  it('throws an error if is not an array of items', () => {
     expect(() => renderHook(() => useCart([{}]))).toThrow()
-    expect(() => renderHook(() => useCart([{ id: 1 }]))).toThrow()
+    expect(() => renderHook(() => useCart([1, 2, 3]))).toThrow()
     expect(() => renderHook(() => useCart(mockCart))).not.toThrow()
   })
 
@@ -39,38 +41,69 @@ describe('add', () => {
     expect(() => add('123')).toThrow()
   })
 
+  it('throws an error if quantity is not a number great than 1', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { add } = result.current.utils
+    const { id } = result.current.cart[0]
+
+    expect(() => add(id, '123')).toThrow()
+    expect(() => add(id, {})).toThrow()
+  })
+
+  it('throws an error if the product found does not match', () => {
+    const invalidProduct = { ...mockProduct, title: 'Fake Product' }
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
+    const { add } = result.current.utils
+
+    expect(() => add(invalidProduct)).toThrow()
+  })
+
   it('adds a product to the cart', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { add } = result.current.utils
-    const newProduct = {
-      id: 4,
-      title: 'Product 4',
-      description: 'Description 4',
-      image: 'https://example.com/image5.jpg',
-      price: 40,
-      quantity: 1,
-    }
 
-    act(() => add(newProduct))
+    act(() => add(mockProduct))
 
-    expect(result.current.cart).toEqual([...mockCart, newProduct])
+    expect(result.current.cart).toEqual([
+      ...mockCart,
+      { product: mockProduct, quantity: 1 },
+    ])
   })
 
-  it('throws an error if the product already exists', () => {
+  it('adds a product to the cart with a quantity greater than 1', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { add } = result.current.utils
-    const existingProduct = result.current.cart[0]
 
-    expect(() => add(existingProduct)).toThrow()
+    act(() => add(mockProduct, 5))
+
+    expect(result.current.cart).toEqual([
+      ...mockCart,
+      { product: mockProduct, quantity: 5 },
+    ])
+  })
+
+  it('increases the product if it already exists', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
+    const { add } = result.current.utils
+
+    act(() => add(mockProduct))
+
+    const { quantity } = result.current.cart[0]
+    expect(quantity).toBe(2)
   })
 })
 
 describe('remove', () => {
-  it('throws an error if id prop is not a number', () => {
+  it('throws an error if id prop is not a number greater than 0', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { remove } = result.current.utils
 
     expect(() => remove()).toThrow()
+    expect(() => remove(-5)).toThrow()
     expect(() => remove({})).toThrow()
     expect(() => remove('123')).toThrow()
   })
@@ -78,7 +111,7 @@ describe('remove', () => {
   it('removes a product from the cart', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { remove } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
     act(() => remove(id))
 
@@ -96,10 +129,10 @@ describe('increase', () => {
     expect(() => increase('123')).toThrow()
   })
 
-  it('throw an error if quantity is not a number', () => {
+  it('throws an error if quantity is not a number', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { increase } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
     expect(() => increase(id, '123')).toThrow()
     expect(() => increase(id, {})).toThrow()
@@ -108,11 +141,10 @@ describe('increase', () => {
   it('increases the quantity of a product by 1 by default', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { increase } = result.current.utils
-    const { id, quantity: initialQuantity } = result.current.cart[0]
+    const { quantity: initialQuantity } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      increase(id)
-    })
+    act(() => increase(id))
 
     expect(result.current.cart[0].quantity).toBe(initialQuantity + 1)
   })
@@ -120,18 +152,27 @@ describe('increase', () => {
   it('increases the quantity of a product by the specified amount', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { increase } = result.current.utils
-    const { id, quantity: initialQuantity } = result.current.cart[0]
+    const { quantity: initialQuantity } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      increase(id, 3)
-    })
+    act(() => increase(id, 3))
 
     expect(result.current.cart[0].quantity).toBe(initialQuantity + 3)
+  })
+
+  it('does nothing if the product is not found', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { increase } = result.current.utils
+    const invalidId = 999
+
+    act(() => increase(invalidId))
+
+    expect(result.current.cart).toEqual(mockCart)
   })
 })
 
 describe('decrease', () => {
-  it('throws an error if id prop is not a number', () => {
+  it('throws an error if id prop is not a number greater than 0', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { decrease } = result.current.utils
 
@@ -140,7 +181,7 @@ describe('decrease', () => {
     expect(() => decrease('123')).toThrow()
   })
 
-  it('throw an error if quantity is not a number', () => {
+  it('throw an error if quantity is not a number greater than 0', () => {
     const { result } = renderHook(() => useCart(mockCart))
     const { decrease } = result.current.utils
     const { id } = result.current.cart[0]
@@ -149,97 +190,62 @@ describe('decrease', () => {
     expect(() => decrease(id, {})).toThrow()
   })
 
-  it('decreases the quantity of a product', () => {
-    const productToDecrease = {
-      id: 1,
-      title: 'Product 1',
-      image: 'https://example.com/image1.jpg',
-      price: 10,
-      quantity: 5,
-    }
-    const { result } = renderHook(() => useCart([productToDecrease]))
+  it('decreases the quantity of a product on 1 by default', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 5 }]),
+    )
     const { decrease } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      decrease(id)
-    })
+    act(() => decrease(id))
 
     expect(result.current.cart[0].quantity).toBe(4)
   })
 
   it('removes the product if the quantity reaches 0', () => {
-    const productToDecrease = {
-      id: 1,
-      title: 'Product 1',
-      image: 'https://example.com/image1.jpg',
-      price: 10,
-      quantity: 1,
-    }
-    const { result } = renderHook(() => useCart([productToDecrease]))
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
     const { decrease } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      decrease(id)
-    })
+    act(() => decrease(id))
 
     expect(result.current.cart).toEqual([])
   })
 
   it('decreases the quantity of a product by the specified amount', () => {
-    const productToDecrease = {
-      id: 1,
-      title: 'Product 1',
-      image: 'https://example.com/image1.jpg',
-      price: 10,
-      quantity: 5,
-    }
-    const { result } = renderHook(() => useCart([productToDecrease]))
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 5 }]),
+    )
     const { decrease } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      decrease(id, 3)
-    })
+    act(() => decrease(id, 3))
 
     expect(result.current.cart[0].quantity).toBe(2)
   })
 
-  it('removes the product if the quantity prop is greater than the quantity in the cart', () => {
-    const productToDecrease = {
-      id: 1,
-      title: 'Product 1',
-      image: 'https://example.com/image1.jpg',
-      price: 10,
-      quantity: 5,
-    }
-    const { result } = renderHook(() => useCart([productToDecrease]))
+  it('removes the product if quantity prop is greater than quantity in the cart', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 5 }]),
+    )
     const { decrease } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      decrease(id, 999)
-    })
+    act(() => decrease(id, 999))
 
     expect(result.current.cart).toEqual([])
   })
 
-  it('removes the product if the quantity prop is equal than the quantity in the cart', () => {
-    const productToDecrease = {
-      id: 1,
-      title: 'Product 1',
-      image: 'https://example.com/image1.jpg',
-      price: 10,
-      quantity: 5,
-    }
-    const { result } = renderHook(() => useCart([productToDecrease]))
+  it('removes the product if quantity prop is equal than quantity in the cart', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 5 }]),
+    )
     const { decrease } = result.current.utils
-    const { id } = result.current.cart[0]
+    const { id } = result.current.cart[0].product
 
-    act(() => {
-      decrease(id, 5)
-    })
+    act(() => decrease(id, 5))
 
     expect(result.current.cart).toEqual([])
   })

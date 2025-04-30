@@ -1,84 +1,69 @@
 import { useState } from 'react'
-import { validateCart } from '@/schemas/cart'
 import { validateProduct } from '@/schemas/product'
-import { validateQuantity } from '../schemas/quantity'
+import { validateCart } from '@/schemas/cart'
+import { validatePositiveInteger } from '@/schemas/positiveInteger'
 
-export function useCart(initialProducts = []) {
-  const [cart, setCart] = useState(initialProducts)
+export function useCart(initialCart = []) {
+  const [cart, setCart] = useState(initialCart)
 
-  const cartValidation = validateCart(cart)
-  if (!cartValidation.success) {
-    throw new Error(cartValidation.error)
-  }
+  validateCart(initialCart)
 
-  function add(newProduct) {
-    const productValidation = validateProduct(newProduct)
-    if (!productValidation.success) {
-      throw new Error(productValidation.error)
+  function add(newProduct, quantity = 1) {
+    validateProduct(newProduct)
+
+    const currentItem = cart.find((item) => item.product.id === newProduct.id)
+    const isTheSame =
+      JSON.stringify(currentItem?.product) === JSON.stringify(newProduct)
+
+    if (currentItem && isTheSame) {
+      increase(newProduct.id, quantity)
+      return
+    } else if (currentItem) {
+      throw new Error(
+        'The product is already in the cart but has different properties',
+      )
     }
 
-    const exists = cart.find((item) => item.id === newProduct.id)
-
-    if (exists) {
-      throw new Error('The product already exists in the cart')
-    }
-
-    setCart((prevCart) => [...prevCart, newProduct])
+    setCart((prevCart) => [...prevCart, { product: newProduct, quantity }])
   }
 
   function remove(id) {
-    if (typeof id !== 'number') {
-      throw new Error('The id must be a number')
-    }
+    validatePositiveInteger(id)
 
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id))
+    setCart((prevCart) => prevCart.filter((item) => item.product.id !== id))
   }
 
   function increase(id, quantity = 1) {
-    const quantityValidation = validateQuantity(quantity)
-
-    if (!quantityValidation.success) {
-      throw new Error(quantityValidation.error)
-    }
-
-    if (typeof id !== 'number') {
-      throw new Error('The id must be a number')
-    }
+    validatePositiveInteger(quantity)
+    validatePositiveInteger(id)
 
     setCart((prevCart) =>
-      prevCart.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity + quantity }
-          : product,
-      ),
+      prevCart.map((item) => {
+        return item.product.id === id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      }),
     )
   }
 
   function decrease(id, quantity = 1) {
-    const quantityValidation = validateQuantity(quantity)
-
-    if (!quantityValidation.success) {
-      throw new Error(quantityValidation.error)
-    }
-
-    if (typeof id !== 'number') {
-      throw new Error('The id must be a number')
-    }
+    validatePositiveInteger(quantity)
+    validatePositiveInteger(id)
 
     setCart((prevCart) => {
-      const product = prevCart.find((product) => product.id === id)
+      const item = prevCart.find((item) => item.product.id === id)
 
-      if (!product) return prevCart
+      if (!item) return prevCart
 
-      if (product.quantity <= 1 || quantity >= product.quantity) {
-        return prevCart.filter((product) => product.id !== id)
+      if (quantity >= item.quantity) {
+        return prevCart.filter((item) => item.product.id !== id)
       }
 
-      return prevCart.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity - quantity }
-          : product,
-      )
+      return prevCart.map((item) => {
+        return item.product.id === id
+          ? { ...item, quantity: item.quantity - quantity }
+          : item
+      })
     })
   }
 

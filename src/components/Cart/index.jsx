@@ -35,12 +35,12 @@ export default function Cart() {
         </button>
         <h2>{quantity > 0 ? 'Your products' : 'The car is empty'}</h2>
         <ul>
-          {cart?.map((product) => (
+          {cart?.map(({ product, quantity }) => (
             <li key={product.id}>
               <img src={product.image} alt={product.title} />
               <h3>{product.title}</h3>
               <p>${product.price}</p>
-              <p>Quantity: {product.quantity}</p>
+              <p>Quantity: {quantity}</p>
               <div>
                 <button onClick={() => utils.remove(product.id)}>Remove</button>
                 <button

@@ -34,6 +34,10 @@ export default function Product({ product }) {
     setQuantity(isValid ? value : 1)
   }
 
+  function addToCart() {
+    utils.add({ ...product }, quantity)
+  }
+
   return (
     <article className={styles.product}>
       <picture>
@@ -42,9 +46,7 @@ export default function Product({ product }) {
       <h2>{product.title}</h2>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={() => utils.add({ id: product.id, quantity })}>
-        Add to Cart
-      </button>
+      <button onClick={addToCart}>Add to Cart</button>
       <div>
         <label htmlFor="quantity">Quantity</label>
         <input

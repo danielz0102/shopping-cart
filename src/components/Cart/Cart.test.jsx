@@ -9,12 +9,7 @@ import CartProvider from '@/providers/CartProvider'
 
 test('displays 0 if there are no products', () => {
   renderCart()
-  screen.getByText(0)
-})
-
-test('must be a button', () => {
-  renderCart()
-  screen.getByRole('button', { name: /cart/i })
+  screen.getByRole('button', { name: /cart.*0/i })
 })
 
 test('displays the quantity of items passed', () => {
@@ -87,7 +82,9 @@ test('has a button to remove the product', async () => {
   const button = screen.getByRole('button', { name: /cart/i })
   await user.click(button)
   const removeBtn = screen.getByRole('button', { name: /remove/i })
-  const title = screen.getByRole('heading', { name: mockCart[0].title })
+  const title = screen.getByRole('heading', {
+    name: mockCart[0].product.title,
+  })
 
   await user.click(removeBtn)
 
@@ -99,7 +96,7 @@ test('has a button to remove all products', async () => {
   renderCart(mockCart)
   const button = screen.getByRole('button', { name: /cart/i })
   await user.click(button)
-  const titles = mockCart.map((product) =>
+  const titles = mockCart.map(({ product }) =>
     screen.getByRole('heading', { name: product.title }),
   )
   const clearBtn = screen.getByRole('button', { name: /clear/i })
@@ -149,11 +146,11 @@ test('has a button to close the sidebar', async () => {
 })
 
 function getProductsElements() {
-  return mockCart.map((product) => ({
+  return mockCart.map(({ product, quantity }) => ({
     title: screen.getByText(product.title),
     price: screen.getByText(`$${product.price}`),
     image: screen.getByRole('img', { name: product.title }),
-    quantity: screen.getByText(`Quantity: ${product.quantity}`),
+    quantity: screen.getByText(new RegExp(`quantity.*${quantity}`, 'i')),
   }))
 }
 
