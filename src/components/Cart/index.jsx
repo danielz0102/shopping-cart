@@ -1,6 +1,8 @@
 import { useContext, useRef } from 'react'
-import { CartContext } from '@/providers/contexts'
 import { Link } from 'react-router-dom'
+
+import CartItem from '../CartItem'
+import { CartContext } from '@/providers/contexts'
 
 export default function Cart() {
   const { cart, utils } = useContext(CartContext)
@@ -35,28 +37,8 @@ export default function Cart() {
         </button>
         <h2>{quantity > 0 ? 'Your products' : 'The car is empty'}</h2>
         <ul>
-          {cart?.map(({ product, quantity }) => (
-            <li key={product.id}>
-              <img src={product.image} alt={product.title} />
-              <h3>{product.title}</h3>
-              <p>${product.price}</p>
-              <p>Quantity: {quantity}</p>
-              <div>
-                <button onClick={() => utils.remove(product.id)}>Remove</button>
-                <button
-                  aria-label="Increase"
-                  onClick={() => utils.increase(product.id)}
-                >
-                  +
-                </button>
-                <button
-                  aria-label="Decrease"
-                  onClick={() => utils.decrease(product.id)}
-                >
-                  -
-                </button>
-              </div>
-            </li>
+          {cart?.map(({ product }) => (
+            <CartItem key={product.id} id={product.id} />
           ))}
         </ul>
         {quantity > 0 && <Link to="/checkout">Checkout</Link>}
