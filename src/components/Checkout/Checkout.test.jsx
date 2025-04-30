@@ -1,4 +1,4 @@
-import { test, vi } from 'vitest'
+import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -30,6 +30,12 @@ test('has a button to realize the payment', () => {
   renderCheckout()
 
   screen.getByRole('button', { name: /pay/i })
+})
+
+test('does not show the payment button if the cart is empty', () => {
+  renderCheckout([])
+
+  expect(screen.queryByRole('button', { name: /pay/i })).not.toBeInTheDocument()
 })
 
 test('shows the payment alert when the button is clicked', async () => {
