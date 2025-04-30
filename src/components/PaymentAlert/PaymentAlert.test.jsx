@@ -17,11 +17,20 @@ test('renders open', () => {
   screen.getByRole('heading')
 })
 
-test('closes on click close button', async () => {
+test('closes by clicking close button', async () => {
   const user = userEvent.setup()
   render(<PaymentAlert onConfirm={() => {}} />)
 
   await user.click(screen.getByRole('button', { name: /close/i }))
+
+  expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+})
+
+test('closes by clicking confirm button ', async () => {
+  const user = userEvent.setup()
+  render(<PaymentAlert onConfirm={() => {}} />)
+
+  await user.click(screen.getByRole('button', { name: /confirm/i }))
 
   expect(screen.queryByRole('heading')).not.toBeInTheDocument()
 })
