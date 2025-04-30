@@ -1,0 +1,31 @@
+.cart {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.items-counter {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 0.6rem;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  min-height: 100vh;
+  background-color: var(--primary-light);
+  border: none;
+}

@@ -1,3 +1,8 @@
+:root {
+  --primary: #3131c0;
+  --primary-light: #9393e1;
+}
+
 #root {
   min-height: 100vh;
   display: flex;
@@ -10,10 +15,10 @@ main {
 }
 
 a {
-  color: #9393e1;
+  color: var(--primary-light);
   text-decoration: none;
 
   &:active {
-    color: #3131c0;
+    color: var(--primary);
   }
 }

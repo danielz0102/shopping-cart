@@ -13,4 +13,9 @@ export default defineConfig({
     environment: 'happy-dom',
     setupFiles: './tests/setup.js',
   },
+  css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    },
+  },
 })

@@ -67,6 +67,18 @@ test('has a button to remove all products', async () => {
   items.forEach((title) => expect(title).not.toBeVisible())
 })
 
+test('does not show the clear button if is empty', async () => {
+  const user = userEvent.setup()
+  renderCart()
+  const button = screen.getByRole('button', { name: /cart/i })
+
+  await user.click(button)
+
+  expect(
+    screen.queryByRole('button', { name: /clear/i }),
+  ).not.toBeInTheDocument()
+})
+
 test('shows the total price correctly', () => {
   renderCart(mockCart)
   const total = mockCart.reduce(
@@ -88,7 +100,7 @@ test('has a link to checkout', async () => {
   screen.getByRole('link', { name: /checkout/i })
 })
 
-test('does not have a link to checkout if no products are passed', async () => {
+test('does not have a link to checkout if is empty', async () => {
   const user = userEvent.setup()
   renderCart()
   const button = screen.getByRole('button', { name: /cart/i })
