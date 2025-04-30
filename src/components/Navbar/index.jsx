@@ -1,29 +1,28 @@
 import { Link } from 'react-router-dom'
+import { House } from 'lucide-react'
+import { Store } from 'lucide-react'
+
+import styles from './Navbar.module.css'
 import Cart from '../Cart'
 
 export default function Navbar() {
   return (
-    <nav>
-      <ul>
+    <nav className={styles.navbar}>
+      <ul className={styles.links}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <House strokeWidth={1} />
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/shop">Shop</Link>
+          <Link to="/shop">
+            <Store strokeWidth={1} />
+            Shop
+          </Link>
         </li>
       </ul>
-      <Cart
-        initialProducts={[
-          {
-            id: 1,
-            title: 'Product 1',
-            image: 'https://example.com/image1.jpg',
-            price: 10,
-            quantity: 1,
-          },
-        ]}
-        onCheckout={() => {}}
-      />
+      <Cart />
     </nav>
   )
 }

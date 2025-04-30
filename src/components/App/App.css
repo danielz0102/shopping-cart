@@ -1,5 +1,19 @@
 #root {
   min-height: 100vh;
-  display: grid;
-  place-content: center;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  color: #9393e1;
+  text-decoration: none;
+
+  &:active {
+    color: #3131c0;
+  }
 }

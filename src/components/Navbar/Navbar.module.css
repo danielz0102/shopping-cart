@@ -1,0 +1,32 @@
+.navbar {
+  --spacing: 16px;
+
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing);
+  padding-block: 16px;
+
+  position: sticky;
+  top: 0;
+  animation: blur 0.25s ease-out forwards;
+  animation-timeline: scroll();
+  animation-range: 0 100px;
+}
+
+@keyframes blur {
+  100% {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.links {
+  display: flex;
+  gap: var(--spacing);
+  list-style: none;
+
+  & a {
+    display: flex;
+    gap: 4px;
+  }
+}
