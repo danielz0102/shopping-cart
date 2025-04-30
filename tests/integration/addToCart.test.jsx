@@ -25,15 +25,11 @@ test('adds product to cart when Add to Cart button is clicked', async () => {
       </CartProvider>
     </MemoryRouter>,
   )
-
   screen.getByRole('button', { name: /cart.*0/i })
 
-  const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
-  await user.click(addToCartBtn)
+  await user.click(screen.getByRole('button', { name: /add to cart/i }))
 
-  const cart = screen.getByRole('button', { name: /cart.*1/i })
-  await user.click(cart)
-
+  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
   const sidebar = screen.getByRole('dialog')
   getByRole(sidebar, 'heading', { name: mockProduct.title })
   getByText(sidebar, new RegExp(`${mockProduct.price}`, 'i'))
@@ -51,23 +47,17 @@ test('increases the quantity of a item if it is already in the cart', async () =
       </CartProvider>
     </MemoryRouter>,
   )
-
   const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
   await user.click(addToCartBtn)
-
-  const cart = screen.getByRole('button', { name: /cart.*1/i })
-  await user.click(cart)
-
+  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
   const sidebar = screen.getByRole('dialog')
-  getByRole(sidebar, 'heading', { name: mockProduct.title })
+
   getByText(sidebar, /quantity.*1/i)
-
   await user.click(addToCartBtn)
-
   getByText(sidebar, /quantity.*2/i)
 })
 
-test('can increase the quantity by the increment button', async () => {
+test('can increase the quantity of a item by the increment button', async () => {
   const user = userEvent.setup()
   render(
     <MemoryRouter>
@@ -77,21 +67,17 @@ test('can increase the quantity by the increment button', async () => {
       </CartProvider>
     </MemoryRouter>,
   )
-
   const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
   await user.click(addToCartBtn)
-
-  const cart = screen.getByRole('button', { name: /cart.*1/i })
-  await user.click(cart)
-
-  const sidebar = screen.getByRole('dialog')
+  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
   const incrementBtn = screen.getByRole('button', { name: /increment/i })
+
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(addToCartBtn)
 
-  getByText(sidebar, /quantity.*5/i)
+  getByText(screen.getByRole('dialog'), /quantity.*5/i)
 })
 
 test('adds an item with a initial quantity that can be greater than 1', async () => {
@@ -104,18 +90,14 @@ test('adds an item with a initial quantity that can be greater than 1', async ()
       </CartProvider>
     </MemoryRouter>,
   )
-
   const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
   const incrementBtn = screen.getByRole('button', { name: /increment/i })
+
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(addToCartBtn)
+  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
 
-  const cart = screen.getByRole('button', { name: /cart.*1/i })
-  await user.click(cart)
-
-  const sidebar = screen.getByRole('dialog')
-
-  getByText(sidebar, /quantity.*4/i)
+  getByText(screen.getByRole('dialog'), /quantity.*4/i)
 })
