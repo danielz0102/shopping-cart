@@ -20,7 +20,7 @@ export default function Checkout() {
         ))}
       </ul>
       <button onClick={() => setShowAlert((prev) => !prev)}>Pay</button>
-      {showAlert && <PaymentAlert />}
+      {showAlert && <PaymentAlert onConfirm={() => {}} />}
     </main>
   )
 }

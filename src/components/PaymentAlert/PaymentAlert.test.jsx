@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 
 import PaymentAlert from '.'
 
-test('onConfirm is a function', () => {
+test('throws an error if onConfirm is not a function', () => {
   expect(() => render(<PaymentAlert />)).toThrow()
   expect(() => render(<PaymentAlert onConfirm={123} />)).toThrow()
   expect(() => render(<PaymentAlert onConfirm={'123'} />)).toThrow()
