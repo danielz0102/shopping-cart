@@ -9,10 +9,7 @@ export default function Cart() {
   const sidebar = useRef(null)
 
   const quantity = cart.length
-  const total = cart.reduce(
-    (acc, { product, quantity }) => acc + product.price * quantity,
-    0,
-  )
+  const total = utils.getTotal()
 
   function handleCartClick() {
     if (sidebar.current.open) {

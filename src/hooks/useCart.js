@@ -67,9 +67,19 @@ export function useCart(initialCart = []) {
     })
   }
 
+  function getTotal() {
+    return cart.reduce((acc, { product, quantity }) => {
+      return acc + product.price * quantity
+    }, 0)
+  }
+
   function clear() {
     setCart([])
   }
 
-  return { cart, setCart, utils: { add, remove, increase, decrease, clear } }
+  return {
+    cart,
+    setCart,
+    utils: { add, remove, increase, decrease, clear, getTotal },
+  }
 }

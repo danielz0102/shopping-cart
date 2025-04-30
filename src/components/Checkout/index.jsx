@@ -12,10 +12,7 @@ export default function Checkout() {
 
   const { cart, utils } = useContext(CartContext)
   const isEmpty = cart.length === 0
-  const totalPrice = cart.reduce(
-    (acc, { product, quantity }) => acc + product.price * quantity,
-    0,
-  )
+  const totalPrice = utils.getTotal()
   let title = isEmpty ? 'The cart is empty' : 'Checkout'
 
   if (isPaid) {
