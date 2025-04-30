@@ -12,7 +12,10 @@ export default function Checkout() {
 
   const { cart, utils } = useContext(CartContext)
   const isEmpty = cart.length === 0
-
+  const totalPrice = cart.reduce(
+    (acc, { product, quantity }) => acc + product.price * quantity,
+    0,
+  )
   let title = isEmpty ? 'The cart is empty' : 'Checkout'
 
   if (isPaid) {
@@ -39,7 +42,10 @@ export default function Checkout() {
         ))}
       </ul>
       {!isEmpty && (
-        <button onClick={() => setShowAlert((prev) => !prev)}>Pay</button>
+        <>
+          <p>{`Total: $${totalPrice.toFixed(2)}`}</p>
+          <button onClick={() => setShowAlert((prev) => !prev)}>Pay</button>
+        </>
       )}
       {showAlert && <PaymentAlert onConfirm={handleConfirm} />}
       {isPaid && <Toast message="Payment confirmed" />}

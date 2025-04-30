@@ -26,6 +26,17 @@ test('shows a message if the cart is empty', () => {
   screen.getByText(/cart.*empty/i)
 })
 
+test('shows the total price', () => {
+  renderCheckout()
+
+  const totalPrice = mockCart.reduce(
+    (acc, { product, quantity }) => acc + product.price * quantity,
+    0,
+  )
+
+  screen.getByText(`Total: $${totalPrice.toFixed(2)}`)
+})
+
 test('has a button to realize the payment', () => {
   renderCheckout()
 
