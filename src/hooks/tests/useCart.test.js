@@ -261,3 +261,17 @@ describe('clear', () => {
     expect(result.current.cart).toEqual([])
   })
 })
+
+describe('getTotal', () => {
+  it('returns the total price of the cart', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { getTotal } = result.current.utils
+
+    const expectedTotal = mockCart.reduce(
+      (acc, { product, quantity }) => acc + product.price * quantity,
+      0,
+    )
+
+    expect(getTotal()).toBe(expectedTotal)
+  })
+})
