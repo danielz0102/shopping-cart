@@ -2,6 +2,6 @@
 
 ## TODO
 
-- Add Checkout page
+- Show total price in Cart and Checkout
 - Improve styles
 - Deploy

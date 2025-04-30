@@ -41,7 +41,11 @@ export default function Cart() {
             <CartItem key={product.id} id={product.id} />
           ))}
         </ul>
-        {quantity > 0 && <Link to="/checkout">Checkout</Link>}
+        {quantity > 0 && (
+          <Link to="/checkout" onClick={closeSidebar}>
+            Checkout
+          </Link>
+        )}
         <button onClick={utils.clear}>Clear</button>
       </dialog>
     </>

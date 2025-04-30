@@ -104,6 +104,16 @@ test('has a button to close the sidebar', async () => {
   expect(sidebar).not.toBeVisible()
 })
 
+test('closes the sidebar when checkout button is clicked', async () => {
+  const user = userEvent.setup()
+  renderCart(mockCart)
+  await user.click(screen.getByRole('button', { name: /cart/i }))
+
+  await user.click(screen.getByRole('link', { name: /checkout/i }))
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+})
+
 function renderCart(cart = []) {
   render(
     <MemoryRouter>
