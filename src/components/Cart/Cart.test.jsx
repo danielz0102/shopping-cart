@@ -67,6 +67,17 @@ test('has a button to remove all products', async () => {
   items.forEach((title) => expect(title).not.toBeVisible())
 })
 
+test('shows the total price correctly', () => {
+  renderCart(mockCart)
+  const total = mockCart.reduce(
+    (acc, { product, quantity }) => acc + product.price * quantity,
+    0,
+  )
+  screen.getByText((content) =>
+    content.toLowerCase().includes(`total: $${total.toFixed(2)}`.toLowerCase()),
+  )
+})
+
 test('has a link to checkout', async () => {
   const user = userEvent.setup()
   renderCart(mockCart)

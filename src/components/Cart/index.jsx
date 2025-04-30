@@ -9,6 +9,10 @@ export default function Cart() {
   const sidebar = useRef(null)
 
   const quantity = cart.length
+  const total = cart.reduce(
+    (acc, { product, quantity }) => acc + product.price * quantity,
+    0,
+  )
 
   function handleCartClick() {
     if (sidebar.current.open) {
@@ -42,9 +46,12 @@ export default function Cart() {
           ))}
         </ul>
         {quantity > 0 && (
-          <Link to="/checkout" onClick={closeSidebar}>
-            Checkout
-          </Link>
+          <>
+            <p>{`Total: $${total.toFixed(2)}`}</p>
+            <Link to="/checkout" onClick={closeSidebar}>
+              Checkout
+            </Link>
+          </>
         )}
         <button onClick={utils.clear}>Clear</button>
       </dialog>

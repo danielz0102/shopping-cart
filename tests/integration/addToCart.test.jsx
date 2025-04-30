@@ -1,5 +1,11 @@
 import { test } from 'vitest'
-import { render, screen, getByRole, getByText } from '@testing-library/react'
+import {
+  render,
+  screen,
+  getByRole,
+  getByText,
+  getAllByText,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -32,7 +38,7 @@ test('adds product to cart when Add to Cart button is clicked', async () => {
   await user.click(screen.getByRole('button', { name: /cart.*1/i }))
   const sidebar = screen.getByRole('dialog')
   getByRole(sidebar, 'heading', { name: mockProduct.title })
-  getByText(sidebar, new RegExp(`${mockProduct.price}`, 'i'))
+  getAllByText(sidebar, new RegExp(`${mockProduct.price}`, 'i'))
   getByRole(sidebar, 'img', { name: mockProduct.title })
   getByText(sidebar, /quantity.*1/i)
 })
