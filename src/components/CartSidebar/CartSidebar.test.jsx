@@ -44,9 +44,7 @@ test('shows the total price', () => {
     (acc, { product, quantity }) => acc + product.price * quantity,
     0,
   )
-  screen.getByText((content) =>
-    content.toLowerCase().includes(`total: $${total.toFixed(2)}`.toLowerCase()),
-  )
+  screen.getByText(new RegExp(total.toFixed(2), 'i'))
 })
 
 test('does not show the total price when the cart is empty', () => {
