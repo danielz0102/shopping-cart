@@ -23,7 +23,9 @@ export default function Cart() {
         onClick={handleCartClick}
       >
         <ShoppingCart strokeWidth={1} />
-        <span className={styles.itemsCounter}>{quantity}</span>
+        <span className={styles.itemsCounter}>
+          {quantity < 100 ? quantity : '+99'}
+        </span>
       </button>
       {showSidebar && <CartSidebar />}
     </>
