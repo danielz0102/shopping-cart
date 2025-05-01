@@ -6,13 +6,17 @@ import CartSidebar from '../CartSidebar'
 import { CartContext } from '@/providers/contexts'
 
 export default function Cart() {
-  const [showSidebar, setShowSidebar] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { cart } = useContext(CartContext)
 
   const quantity = cart.reduce((acc, item) => acc + item.quantity, 0)
 
   function handleCartClick() {
-    setShowSidebar((prev) => !prev)
+    setSidebarOpen((prev) => !prev)
+  }
+
+  function handleClose() {
+    setSidebarOpen(false)
   }
 
   return (
@@ -27,7 +31,7 @@ export default function Cart() {
           {quantity < 100 ? quantity : '+99'}
         </span>
       </button>
-      {showSidebar && <CartSidebar />}
+      <CartSidebar open={sidebarOpen} onClose={handleClose} />
     </>
   )
 }

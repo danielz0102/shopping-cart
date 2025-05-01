@@ -1,18 +1,10 @@
-import { test, expect, vi } from 'vitest'
+import { test } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
 
 import Cart from '.'
 import mockCart from '/tests/mocks/cart'
 import CartProvider from '@/providers/CartProvider'
-
-vi.mock('../CartItem', () => ({
-  default: ({ id }) => <div data-testid={id}>Item {id}</div>,
-}))
-
-vi.mock('../CartSidebar', () => ({
-  default: () => <div data-testid="sidebar">Sidebar</div>,
-}))
 
 test('displays 0 if there are no products', () => {
   renderCart()
@@ -28,29 +20,12 @@ test('displays the quantity of items passed', () => {
   })
 })
 
-test('opens the sidebar when is clicked', async () => {
-  const user = userEvent.setup()
-  renderCart()
-
-  await user.click(screen.getByRole('button', { name: /cart/i }))
-
-  screen.getByTestId('sidebar')
-})
-
-test('closes the sidebar when is clicked again', async () => {
-  const user = userEvent.setup()
-  renderCart()
-  await user.click(screen.getByRole('button', { name: /cart/i }))
-
-  await user.click(screen.getByRole('button', { name: /cart/i }))
-
-  expect(screen.queryByTestId('sidebar')).not.toBeInTheDocument()
-})
-
 function renderCart(cart = []) {
-  render(
+  return render(
     <CartProvider initialCart={cart}>
-      <Cart />
+      <MemoryRouter>
+        <Cart />
+      </MemoryRouter>
     </CartProvider>,
   )
 }

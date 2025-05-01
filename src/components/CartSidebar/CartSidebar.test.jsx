@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -12,14 +12,31 @@ vi.mock('../CartItem', () => ({
   default: ({ id }) => <div data-testid="cart-item">Item {id}</div>,
 }))
 
-test('has a button to close', async () => {
-  const user = userEvent.setup()
+test('throws an error if open prop is not a boolean', () => {
+  expect(() => renderSidebar({ open: 'not a boolean' })).toThrow()
+  expect(() => renderSidebar({ open: {} })).toThrow()
+  expect(() => renderSidebar({ open: 123 })).toThrow()
+})
+
+test('throws an error if onClose prop is not a function', () => {
+  expect(() => renderSidebar({ onClose: 'not a function' })).toThrow()
+  expect(() => renderSidebar({ onClose: {} })).toThrow()
+  expect(() => renderSidebar({ onClose: 123 })).toThrow()
+})
+
+test('opens by default', async () => {
   renderSidebar()
+  await waitFor(() => expect(screen.getByRole('complementary')).toBeVisible())
+})
 
-  const closeButton = screen.getByRole('button', { name: /close/i })
-  await user.click(closeButton)
+test('executes onClose when close button is clicked', async () => {
+  const onClose = vi.fn()
+  const user = userEvent.setup()
+  renderSidebar({ onClose })
 
-  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: /close/i }))
+
+  expect(onClose).toHaveBeenCalled()
 })
 
 test('shows a message when the cart is empty', () => {
@@ -28,18 +45,18 @@ test('shows a message when the cart is empty', () => {
 })
 
 test('shows a message when the cart has items', () => {
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart })
   screen.getByRole('heading', { name: /your products/i })
 })
 
 test('renders a CartItem for each item in the cart', () => {
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart })
   const items = screen.getAllByTestId('cart-item')
   expect(items).toHaveLength(mockCart.length)
 })
 
 test('shows the total price', () => {
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart })
   const total = mockCart.reduce(
     (acc, { product, quantity }) => acc + product.price * quantity,
     0,
@@ -53,18 +70,19 @@ test('does not show the total price when the cart is empty', () => {
 })
 
 test('has a link to checkout', async () => {
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart })
 
   screen.getByRole('link', { name: /checkout/i })
 })
 
-test('closes the sidebar when clicking on checkout', async () => {
+test('executes onClose when checkout link is clicked', async () => {
+  const onClose = vi.fn()
   const user = userEvent.setup()
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart, onClose })
 
   await user.click(screen.getByRole('link', { name: /checkout/i }))
 
-  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+  expect(onClose).toHaveBeenCalled()
 })
 
 test('does not have a link to checkout if the cart is empty', () => {
@@ -76,18 +94,24 @@ test('does not have a link to checkout if the cart is empty', () => {
 
 test('has a button to clear the cart', async () => {
   const user = userEvent.setup()
-  renderSidebar(mockCart)
+  renderSidebar({ cart: mockCart })
 
   await user.click(screen.getByRole('button', { name: /clear/i }))
 
   screen.getByRole('heading', { name: /the cart is empty/i })
 })
 
-function renderSidebar(cart = []) {
+function renderSidebar(
+  { open = true, onClose = () => {}, cart = [] } = {
+    open: true,
+    onClose: () => {},
+    cart: [],
+  },
+) {
   return render(
     <MemoryRouter>
       <CartProvider initialCart={cart}>
-        <CartSidebar />
+        <CartSidebar open={open} onClose={onClose} />
       </CartProvider>
     </MemoryRouter>,
   )
