@@ -103,7 +103,7 @@ test('adds an item with a initial quantity that can be greater than 1', async ()
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(addToCartBtn)
-  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
+  await user.click(screen.getByRole('button', { name: /cart.*4/i }))
 
   getByText(screen.getByRole('complementary'), /quantity.*4/i)
 })

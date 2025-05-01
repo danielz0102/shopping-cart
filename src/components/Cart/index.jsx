@@ -9,7 +9,7 @@ export default function Cart() {
   const [showSidebar, setShowSidebar] = useState(false)
   const { cart } = useContext(CartContext)
 
-  const quantity = cart.length
+  const quantity = cart.reduce((acc, item) => acc + item.quantity, 0)
 
   function handleCartClick() {
     setShowSidebar((prev) => !prev)

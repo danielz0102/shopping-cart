@@ -21,8 +21,10 @@ test('displays 0 if there are no products', () => {
 
 test('displays the quantity of items passed', () => {
   renderCart(mockCart)
+  const totalItems = mockCart.reduce((acc, item) => acc + item.quantity, 0)
+
   screen.getByRole('button', {
-    name: new RegExp(`cart.*${mockCart.length}`, 'i'),
+    name: new RegExp(`cart.*${totalItems}`, 'i'),
   })
 })
 

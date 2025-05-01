@@ -24,14 +24,14 @@ export default function Product({ product }) {
 
   function handleChange(event) {
     const value = event.target.value
-    setQuantity(value)
+    setQuantity(Number(value))
   }
 
   function validateQuantity(event) {
     const value = event.target.value
     const isValid = value > 0 && !isNaN(value)
 
-    setQuantity(isValid ? value : 1)
+    setQuantity(isValid ? Number(value) : 1)
   }
 
   function addToCart() {
