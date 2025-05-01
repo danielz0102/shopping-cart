@@ -36,7 +36,7 @@ test('adds product to cart when Add to Cart button is clicked', async () => {
   await user.click(screen.getByRole('button', { name: /add to cart/i }))
 
   await user.click(screen.getByRole('button', { name: /cart.*1/i }))
-  const sidebar = screen.getByRole('dialog')
+  const sidebar = screen.getByRole('complementary')
   getByRole(sidebar, 'heading', { name: mockProduct.title })
   getAllByText(sidebar, new RegExp(`${mockProduct.price}`, 'i'))
   getByRole(sidebar, 'img', { name: mockProduct.title })
@@ -56,7 +56,7 @@ test('increases the quantity of a item if it is already in the cart', async () =
   const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
   await user.click(addToCartBtn)
   await user.click(screen.getByRole('button', { name: /cart.*1/i }))
-  const sidebar = screen.getByRole('dialog')
+  const sidebar = screen.getByRole('complementary')
 
   getByText(sidebar, /quantity.*1/i)
   await user.click(addToCartBtn)
@@ -83,7 +83,7 @@ test('can increase the quantity of a item by the increment button', async () => 
   await user.click(incrementBtn)
   await user.click(addToCartBtn)
 
-  getByText(screen.getByRole('dialog'), /quantity.*5/i)
+  getByText(screen.getByRole('complementary'), /quantity.*5/i)
 })
 
 test('adds an item with a initial quantity that can be greater than 1', async () => {
@@ -105,5 +105,5 @@ test('adds an item with a initial quantity that can be greater than 1', async ()
   await user.click(addToCartBtn)
   await user.click(screen.getByRole('button', { name: /cart.*1/i }))
 
-  getByText(screen.getByRole('dialog'), /quantity.*4/i)
+  getByText(screen.getByRole('complementary'), /quantity.*4/i)
 })

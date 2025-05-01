@@ -1,7 +1,6 @@
 import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
 
 import Cart from '.'
 import mockCart from '/tests/mocks/cart'
@@ -9,6 +8,10 @@ import CartProvider from '@/providers/CartProvider'
 
 vi.mock('../CartItem', () => ({
   default: ({ id }) => <div data-testid={id}>Item {id}</div>,
+}))
+
+vi.mock('../CartSidebar', () => ({
+  default: () => <div data-testid="sidebar">Sidebar</div>,
 }))
 
 test('displays 0 if there are no products', () => {
@@ -23,126 +26,29 @@ test('displays the quantity of items passed', () => {
   })
 })
 
-test('renders CartItem for each product', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
-
-  await user.click(screen.getByRole('button', { name: /cart/i }))
-  mockCart.forEach(({ product }) => screen.getByTestId(product.id))
-})
-
-test('does not display any items if no products are passed', async () => {
+test('opens the sidebar when is clicked', async () => {
   const user = userEvent.setup()
   renderCart()
-  const button = screen.getByRole('button', { name: /cart/i })
 
-  await user.click(button)
-
-  screen.getByText(/car.*empty/i)
-  expect(screen.queryByText(/product/i)).not.toBeInTheDocument()
-})
-
-test('hides items and sidebar when is clicked again', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
-  const button = screen.getByRole('button', { name: /cart/i })
-  await user.click(button)
-  const sidebar = screen.getByRole('dialog')
-  const items = mockCart.map(({ product }) => screen.getByTestId(product.id))
-
-  await user.click(button)
-
-  expect(sidebar).not.toBeVisible()
-  items.forEach((item) => expect(item).not.toBeVisible())
-})
-
-test('has a button to remove all products', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
-  await user.click(screen.getByRole('button', { name: /cart/i }))
-  const items = mockCart.map(({ product }) => screen.getByTestId(product.id))
-
-  await user.click(screen.getByRole('button', { name: /clear/i }))
-
-  items.forEach((title) => expect(title).not.toBeVisible())
-})
-
-test('does not show the clear button if is empty', async () => {
-  const user = userEvent.setup()
-  renderCart()
-  const button = screen.getByRole('button', { name: /cart/i })
-
-  await user.click(button)
-
-  expect(
-    screen.queryByRole('button', { name: /clear/i }),
-  ).not.toBeInTheDocument()
-})
-
-test('shows the total price correctly', () => {
-  renderCart(mockCart)
-  const total = mockCart.reduce(
-    (acc, { product, quantity }) => acc + product.price * quantity,
-    0,
-  )
-  screen.getByText((content) =>
-    content.toLowerCase().includes(`total: $${total.toFixed(2)}`.toLowerCase()),
-  )
-})
-
-test('has a link to checkout', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
-  const button = screen.getByRole('button', { name: /cart/i })
-
-  await user.click(button)
-
-  screen.getByRole('link', { name: /checkout/i })
-})
-
-test('does not have a link to checkout if is empty', async () => {
-  const user = userEvent.setup()
-  renderCart()
-  const button = screen.getByRole('button', { name: /cart/i })
-
-  await user.click(button)
-
-  expect(
-    screen.queryByRole('link', { name: /checkout/i }),
-  ).not.toBeInTheDocument()
-})
-
-test('has a button to close the sidebar', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
-  const button = screen.getByRole('button', { name: /cart/i })
-
-  await user.click(button)
-
-  const closeBtn = screen.getByRole('button', { name: /close/i })
-  const sidebar = screen.getByRole('dialog')
-
-  await user.click(closeBtn)
-
-  expect(sidebar).not.toBeVisible()
-})
-
-test('closes the sidebar when checkout button is clicked', async () => {
-  const user = userEvent.setup()
-  renderCart(mockCart)
   await user.click(screen.getByRole('button', { name: /cart/i }))
 
-  await user.click(screen.getByRole('link', { name: /checkout/i }))
+  screen.getByTestId('sidebar')
+})
 
-  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+test('closes the sidebar when is clicked again', async () => {
+  const user = userEvent.setup()
+  renderCart()
+  await user.click(screen.getByRole('button', { name: /cart/i }))
+
+  await user.click(screen.getByRole('button', { name: /cart/i }))
+
+  expect(screen.queryByTestId('sidebar')).not.toBeInTheDocument()
 })
 
 function renderCart(cart = []) {
   render(
-    <MemoryRouter>
-      <CartProvider initialCart={cart}>
-        <Cart />
-      </CartProvider>
-    </MemoryRouter>,
+    <CartProvider initialCart={cart}>
+      <Cart />
+    </CartProvider>,
   )
 }
