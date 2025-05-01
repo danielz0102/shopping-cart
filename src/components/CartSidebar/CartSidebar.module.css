@@ -1,0 +1,39 @@
+.sidebar {
+  --spacing: 16px;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  padding: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+
+  & h2 {
+    text-align: center;
+  }
+
+  & ul {
+    flex: 1;
+    list-style: none;
+    overflow-y: auto;
+  }
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  position: fixed;
+  top: var(--spacing);
+  right: var(--spacing);
+  transition: transform 0.25s;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+}

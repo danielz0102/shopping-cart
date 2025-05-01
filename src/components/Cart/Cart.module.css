@@ -19,13 +19,3 @@
   display: grid;
   place-content: center;
 }
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 300px;
-  min-height: 100vh;
-  background-color: var(--primary-light);
-  border: none;
-}

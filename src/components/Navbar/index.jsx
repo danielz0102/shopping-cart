@@ -10,13 +10,13 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <ul className={styles.links}>
         <li>
-          <Link to="/">
+          <Link to="/" className="link">
             <House strokeWidth={1} />
             Home
           </Link>
         </li>
         <li>
-          <Link to="/shop">
+          <Link to="/shop" className="link">
             <Store strokeWidth={1} />
             Shop
           </Link>
