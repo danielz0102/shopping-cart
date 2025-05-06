@@ -20,9 +20,10 @@ main {
   gap: 4px;
   color: var(--primary);
   text-decoration: none;
+  transition: transform 0.25s ease-out;
 
   &:hover {
-    text-decoration: underline;
+    transform: scale(1.05);
   }
 
   &:active {

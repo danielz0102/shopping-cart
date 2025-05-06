@@ -3,6 +3,12 @@
   border: none;
   background-color: transparent;
   color: var(--primary);
+
+  transition: transform 0.25s ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .items-counter {
