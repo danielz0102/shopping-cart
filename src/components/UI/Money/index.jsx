@@ -1,5 +1,4 @@
 import styles from './Money.module.css'
-import { Receipt } from 'lucide-react'
 
 export function Money({ amount }) {
   const formatter = new Intl.NumberFormat('en-US', {
@@ -9,10 +8,5 @@ export function Money({ amount }) {
     maximumFractionDigits: 2,
   })
 
-  return (
-    <p className={styles.money}>
-      <Receipt />
-      {formatter.format(amount)}
-    </p>
-  )
+  return <p className={styles.money}>{formatter.format(amount)}</p>
 }

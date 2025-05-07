@@ -1,6 +1,5 @@
-import { test, expect } from 'vitest'
+import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 import Product from '.'
 import { CartContext } from '@/providers/contexts'
@@ -12,6 +11,10 @@ const mockProduct = {
   description: 'This is a test product.',
   price: 19.99,
 }
+
+vi.mock('../Counter', () => ({
+  default: (props) => <div data-testid="counter">{JSON.stringify(props)}</div>,
+}))
 
 test('throws an error if product is not correct or is not provided', () => {
   expect(() => renderProduct(123)).toThrow()
@@ -33,102 +36,21 @@ test('renders product info', () => {
   expect(screen.getByText(`$${mockProduct.price}`)).toBeInTheDocument()
 })
 
-test('handles the quantity of the item', async () => {
-  const user = userEvent.setup()
+test('has a button to add product to cart', () => {
   renderProduct(mockProduct)
-
-  const quantity = screen.getByRole('spinbutton')
-  expect(quantity).toHaveValue(1)
-
-  const incrementBtn = screen.getByRole('button', { name: /increment/i })
-  await user.click(incrementBtn)
-  await user.click(incrementBtn)
-
-  expect(quantity).toHaveValue(3)
-
-  const decrementBtn = screen.getByRole('button', { name: /decrement/i })
-  await user.click(decrementBtn)
-
-  expect(quantity).toHaveValue(2)
+  screen.getByRole('button', { name: /add to cart/i })
 })
 
-test('does not decrement quantity below 1', async () => {
-  const user = userEvent.setup()
+test('renders Counter properly', () => {
   renderProduct(mockProduct)
 
-  const quantity = screen.getByRole('spinbutton')
-  expect(quantity).toHaveValue(1)
-
-  const decrementBtn = screen.getByRole('button', { name: /decrement/i })
-  await user.click(decrementBtn)
-  await user.click(decrementBtn)
-
-  expect(quantity).toHaveValue(1)
-})
-
-test('changes the quantity by user input', async () => {
-  const user = userEvent.setup()
-  renderProduct(mockProduct)
-
-  const quantity = screen.getByRole('spinbutton')
-
-  expect(quantity).toHaveValue(1)
-
-  await user.type(quantity, '5')
-
-  expect(quantity).toHaveValue(15)
-})
-
-test('does not allow negative quantity input', async () => {
-  const user = userEvent.setup()
-  renderProduct(mockProduct)
-
-  const quantity = screen.getByRole('spinbutton')
-
-  expect(quantity).toHaveValue(1)
-
-  //Select the input and moves to the beginning
-  await user.click(quantity)
-  await user.keyboard('{Home}')
-
-  await user.type(quantity, '-')
-
-  //The input should be validated on blur
-  await user.click(document.body)
-
-  expect(quantity).toHaveValue(1)
-})
-
-test('ignores non-numeric quantity inputs', async () => {
-  const user = userEvent.setup()
-  renderProduct(mockProduct)
-
-  const quantity = screen.getByRole('spinbutton')
-
-  expect(quantity).toHaveValue(1)
-
-  await user.type(quantity, '500')
-
-  expect(quantity).toHaveValue(1500)
-
-  await user.type(quantity, 'abc')
-
-  expect(quantity).toHaveValue(1500)
-})
-
-test('resets quantity to 1 on invalid input characters', async () => {
-  const user = userEvent.setup()
-  renderProduct(mockProduct)
-
-  const quantity = screen.getByRole('spinbutton')
-  await user.type(quantity, '5')
-
-  expect(quantity).toHaveValue(15)
-
-  await user.type(quantity, 'e+-')
-  await user.click(document.body)
-
-  expect(quantity).toHaveValue(1)
+  expect(screen.getByTestId('counter')).toHaveTextContent(
+    JSON.stringify({
+      label: 'Product quantity',
+      initialCount: 1,
+      min: 1,
+    }),
+  )
 })
 
 function renderProduct(product) {

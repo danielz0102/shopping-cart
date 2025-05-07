@@ -1,0 +1,22 @@
+.counter {
+  display: flex;
+  background-color: var(--primary-light);
+  padding: 8px 16px;
+  border-radius: 16px;
+
+  & button {
+    background-color: transparent;
+    border: none;
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  & input {
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+  }
+}
