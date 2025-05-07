@@ -1,7 +1,12 @@
 import styles from './Product.module.css'
-import { useState, useContext } from 'react'
 import { productSchema } from '@/schemas/product'
+
+import { useState, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
+
+import { ShoppingBasket } from 'lucide-react'
+import { Money } from '../UI/Money'
+import { PrimaryBtn } from '../UI/PrimaryButton'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
@@ -40,17 +45,20 @@ export default function Product({ product }) {
 
   return (
     <article className={styles.product}>
-      <picture>
+      <div className={styles.imgContainer}>
         <img src={product.image} alt={product.title} />
-      </picture>
+      </div>
       <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
-      <button onClick={addToCart}>Add to Cart</button>
+      <p className={styles.description}>{product.description}</p>
+      <Money amount={product.price} />
+      <PrimaryBtn onClick={addToCart}>
+        Add to Cart
+        <ShoppingBasket strokeWidth={1.5} />
+      </PrimaryBtn>
       <div>
-        <label htmlFor="quantity">Quantity</label>
+        <label htmlFor={`quantity-${product.id}`}>Quantity</label>
         <input
-          id="quantity"
+          id={`quantity-${product.id}`}
           type="number"
           value={quantity}
           onChange={handleChange}
