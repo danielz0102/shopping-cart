@@ -52,3 +52,7 @@ main {
     background-color: var(--primary-light);
   }
 }
+
+.money {
+  color: var(--money);
+}

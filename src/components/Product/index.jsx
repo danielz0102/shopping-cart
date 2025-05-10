@@ -1,12 +1,12 @@
 import styles from './Product.module.css'
 import { productSchema } from '@/schemas/product'
+import moneyFormatter from '@/utils/moneyFormatter'
 
 import { useRef, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
 import Counter from '../Counter'
 import { ShoppingBasket } from 'lucide-react'
-import { Money } from '../UI/Money'
 import { PrimaryBtn } from '../UI/PrimaryButton'
 
 export default function Product({ product }) {
@@ -34,7 +34,7 @@ export default function Product({ product }) {
       </div>
       <h2>{product.title}</h2>
       <p className={styles.description}>{product.description}</p>
-      <Money amount={product.price} />
+      <p className="money">{moneyFormatter.format(product.price)}</p>
       <PrimaryBtn onClick={addToCart}>
         Add to Cart
         <ShoppingBasket strokeWidth={1.5} />
