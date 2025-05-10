@@ -1,6 +1,5 @@
 import styles from './Product.module.css'
 import { productSchema } from '@/schemas/product'
-import moneyFormatter from '@/utils/moneyFormatter'
 
 import { useRef, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
@@ -34,7 +33,7 @@ export default function Product({ product }) {
       </div>
       <h2>{product.title}</h2>
       <p className={styles.description}>{product.description}</p>
-      <p className="money">{moneyFormatter.format(product.price)}</p>
+      <p className="money">${product.price.toFixed(2)}</p>
       <PrimaryBtn onClick={addToCart}>
         Add to Cart
         <ShoppingBasket strokeWidth={1.5} />

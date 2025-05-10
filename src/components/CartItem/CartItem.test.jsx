@@ -33,7 +33,7 @@ test('renders all item info', () => {
 
   screen.getByText(mockItem.product.title)
   screen.getByRole('img', { name: mockItem.product.title })
-  screen.getByText(`$${mockItem.product.price}`)
+  screen.getByText(`$${mockItem.product.price.toFixed(2)}`)
   screen.getByText(new RegExp(`quantity.*${mockItem.quantity}`, 'i'))
 })
 
