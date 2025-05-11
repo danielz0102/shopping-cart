@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { useState, useEffect, useId } from 'react'
 
-import Counter from '../../../UI/Counter'
+import Counter from '@/components/UI/Counter'
 
 const propsSchema = z.object({
   label: z.string().nonempty(),
