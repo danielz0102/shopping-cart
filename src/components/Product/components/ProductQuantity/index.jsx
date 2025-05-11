@@ -40,25 +40,16 @@ export default function ProductQuantity(props) {
     setCount(inputIsValid(value, min) ? Number(value) : min)
   }
 
-  const decrementBtnAttributes = {
-    onClick: decrement,
-  }
-
-  const incrementBtnAttributes = {
-    onClick: increment,
-  }
-  const inputAttributes = {
-    'aria-label': label,
-    value: count,
-    onChange: handleChange,
-    onBlur: validateInput,
-  }
-
   return (
     <Counter
-      decrementBtnAttributes={decrementBtnAttributes}
-      incrementBtnAttributes={incrementBtnAttributes}
-      inputAttributes={inputAttributes}
+      onClickDecrement={decrement}
+      onClickIncrement={increment}
+      inputAttributes={{
+        'aria-label': label,
+        value: count,
+        onChange: handleChange,
+        onBlur: validateInput,
+      }}
     />
   )
 }
