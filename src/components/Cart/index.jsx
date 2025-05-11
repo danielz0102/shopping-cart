@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { ShoppingCart } from 'lucide-react'
 
 import styles from './Cart.module.css'
-import CartSidebar from '../CartSidebar'
+import CartSidebar from './components/CartSidebar'
 import { CartContext } from '@/providers/contexts'
 
 export default function Cart() {
