@@ -1,6 +1,6 @@
 import z from 'zod'
 
-import { useState, useEffect, useId } from 'react'
+import { useState, useEffect } from 'react'
 
 import Counter from '@/components/UI/Counter'
 
@@ -18,7 +18,6 @@ function inputIsValid(value, min) {
 export default function ProductQuantity(props) {
   const { label, initialCount, min, onChange } = propsSchema.parse(props)
   const [count, setCount] = useState(initialCount)
-  const id = useId()
 
   useEffect(() => {
     onChange(Number(count))
@@ -42,18 +41,14 @@ export default function ProductQuantity(props) {
   }
 
   const decrementBtnAttributes = {
-    'aria-label': 'decrement',
     onClick: decrement,
   }
 
   const incrementBtnAttributes = {
-    'aria-label': 'increment',
     onClick: increment,
   }
   const inputAttributes = {
     'aria-label': label,
-    id,
-    type: 'number',
     value: count,
     onChange: handleChange,
     onBlur: validateInput,
