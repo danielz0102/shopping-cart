@@ -67,6 +67,23 @@ export function useCart(initialCart = []) {
     })
   }
 
+  function update(id, quantity) {
+    validatePositiveInteger(id)
+    validatePositiveInteger(quantity)
+
+    const found = cart.some((item) => item.product.id === id)
+
+    if (!found) {
+      throw new Error('Product not found in cart')
+    }
+
+    setCart((prevCart) =>
+      prevCart.map((item) => {
+        return item.product.id === id ? { ...item, quantity } : item
+      }),
+    )
+  }
+
   function getTotal() {
     return cart.reduce((acc, { product, quantity }) => {
       return acc + product.price * quantity
@@ -80,6 +97,6 @@ export function useCart(initialCart = []) {
   return {
     cart,
     setCart,
-    utils: { add, remove, increase, decrease, clear, getTotal },
+    utils: { add, remove, increase, decrease, update, clear, getTotal },
   }
 }
