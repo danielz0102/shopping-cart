@@ -1,9 +1,8 @@
-import styles from './Counter.module.css'
 import z from 'zod'
 
 import { useState, useEffect, useId } from 'react'
-import { Plus } from 'lucide-react'
-import { Minus } from 'lucide-react'
+
+import Counter from '../../../UI/Counter'
 
 const propsSchema = z.object({
   label: z.string().nonempty(),
@@ -16,7 +15,7 @@ function inputIsValid(value, min) {
   return z.number().min(min).safeParse(Number(value)).success
 }
 
-export default function Counter(props) {
+export default function ProductQuantity(props) {
   const { label, initialCount, min, onChange } = propsSchema.parse(props)
   const [count, setCount] = useState(initialCount)
   const id = useId()
@@ -42,22 +41,29 @@ export default function Counter(props) {
     setCount(inputIsValid(value, min) ? Number(value) : min)
   }
 
+  const decrementBtnAttributes = {
+    'aria-label': 'decrement',
+    onClick: decrement,
+  }
+
+  const incrementBtnAttributes = {
+    'aria-label': 'increment',
+    onClick: increment,
+  }
+  const inputAttributes = {
+    'aria-label': label,
+    id,
+    type: 'number',
+    value: count,
+    onChange: handleChange,
+    onBlur: validateInput,
+  }
+
   return (
-    <div className={styles.counter}>
-      <button aria-label="decrement" onClick={decrement}>
-        <Minus strokeWidth={1.5} />
-      </button>
-      <input
-        aria-label={label}
-        id={id}
-        type="number"
-        value={count}
-        onChange={handleChange}
-        onBlur={validateInput}
-      />
-      <button aria-label="increment" onClick={increment}>
-        <Plus strokeWidth={1.5} />
-      </button>
-    </div>
+    <Counter
+      decrementBtnAttributes={decrementBtnAttributes}
+      incrementBtnAttributes={incrementBtnAttributes}
+      inputAttributes={inputAttributes}
+    />
   )
 }
