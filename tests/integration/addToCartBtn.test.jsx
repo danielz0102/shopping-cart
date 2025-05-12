@@ -16,7 +16,7 @@ const mockProduct = {
   price: 99.99,
 }
 
-test('adds product to cart when Add to Cart button is clicked', async () => {
+test('can add a product to the cart', async () => {
   const user = userEvent.setup()
   render(
     <MemoryRouter>
@@ -40,29 +40,7 @@ test('adds product to cart when Add to Cart button is clicked', async () => {
   ).toHaveValue(1)
 })
 
-test('increases the quantity of a item if it is already in the cart', async () => {
-  const user = userEvent.setup()
-  render(
-    <MemoryRouter>
-      <CartProvider>
-        <Product product={mockProduct} />
-        <Cart />
-      </CartProvider>
-    </MemoryRouter>,
-  )
-  const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
-  await user.click(addToCartBtn)
-  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
-  const quantityInput = screen.getByRole('spinbutton', {
-    name: /item quantity/i,
-  })
-
-  expect(quantityInput).toHaveValue(1)
-  await user.click(addToCartBtn)
-  expect(quantityInput).toHaveValue(2)
-})
-
-test('can increase the quantity of a item by the increment button', async () => {
+test('can increase the quantity of an item already included', async () => {
   const user = userEvent.setup()
   render(
     <MemoryRouter>
@@ -74,20 +52,20 @@ test('can increase the quantity of a item by the increment button', async () => 
   )
   const addToCartBtn = screen.getByRole('button', { name: /add to cart/i })
   const incrementBtn = screen.getByRole('button', { name: /increment/i })
-  await user.click(addToCartBtn)
-  await user.click(screen.getByRole('button', { name: /cart.*1/i }))
 
+  await user.click(addToCartBtn)
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(incrementBtn)
   await user.click(addToCartBtn)
+  await user.click(screen.getByRole('button', { name: /cart.*5/i }))
 
   expect(
     screen.getByRole('spinbutton', { name: /item quantity/i }),
   ).toHaveValue(5)
 })
 
-test('adds an item with a initial quantity that can be greater than 1', async () => {
+test('can add an item with an initial quantity greater than 1', async () => {
   const user = userEvent.setup()
   render(
     <MemoryRouter>
