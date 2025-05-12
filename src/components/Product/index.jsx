@@ -6,7 +6,7 @@ import { CartContext } from '@/providers/contexts'
 
 import Quantity from './components/ProductQuantity'
 import { ShoppingBasket } from 'lucide-react'
-import { PrimaryBtn } from '../UI/PrimaryButton'
+import PrimaryBtn from '../UI/PrimaryButton'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
