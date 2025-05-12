@@ -1,7 +1,46 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Counter from '@/components/Product/components/ProductQuantity'
+
+import Counter from '.'
+
+describe('Props', () => {
+  it('throws error if label is not a string, is not provided or is an empty string', () => {
+    expect(() => render(<Counter />)).toThrowError()
+    expect(() => render(<Counter label={1} />)).toThrowError()
+    expect(() => render(<Counter label="" />)).toThrowError()
+  })
+
+  it('throws error if min is not a number', () => {
+    expect(() => render(<Counter label="counter" min="1" />)).toThrowError()
+    expect(() => render(<Counter label="counter" min={true} />)).toThrowError()
+    expect(() => render(<Counter label="counter" min={{}} />)).toThrowError()
+  })
+
+  it('throws error if initialCount is not a number', () => {
+    expect(() =>
+      render(<Counter label="counter" initialCount="1" />),
+    ).toThrowError()
+    expect(() =>
+      render(<Counter label="counter" initialCount={true} />),
+    ).toThrowError()
+    expect(() =>
+      render(<Counter label="counter" initialCount={{}} />),
+    ).toThrowError()
+  })
+
+  it('throws error if onChange is not a function', () => {
+    expect(() =>
+      render(<Counter label="counter" onChange={1} />),
+    ).toThrowError()
+    expect(() =>
+      render(<Counter label="counter" onChange={true} />),
+    ).toThrowError()
+    expect(() =>
+      render(<Counter label="counter" onChange={{}} />),
+    ).toThrowError()
+  })
+})
 
 describe('Number input', () => {
   it('renders the label provided', () => {
@@ -58,6 +97,19 @@ describe('Number input', () => {
 
     expect(input).toHaveValue(0)
   })
+
+  it('calls onChange with the current value when the input is valid', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(<Counter label="counter" initialCount={1} onChange={onChange} />)
+    const input = screen.getByRole('spinbutton')
+
+    await user.clear(input)
+    await user.type(input, '25')
+    await user.tab()
+
+    expect(onChange).toHaveBeenCalledWith(25)
+  })
 })
 
 it('has a button to increment', async () => {
@@ -69,7 +121,7 @@ it('has a button to increment', async () => {
   expect(screen.getByRole('spinbutton')).toHaveValue(2)
 })
 
-it('executes onChange with current count when the value changes', async () => {
+it('calls onChange with current count when the value changes', async () => {
   const user = userEvent.setup()
   const onChange = vi.fn()
   render(<Counter label="counter" initialCount={1} onChange={onChange} />)

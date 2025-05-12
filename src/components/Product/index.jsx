@@ -4,7 +4,7 @@ import { productSchema } from '@/schemas/product'
 import { useRef, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
-import Quantity from './components/ProductQuantity'
+import Counter from '../Counter'
 import { ShoppingBasket } from 'lucide-react'
 import PrimaryBtn from '../UI/PrimaryButton'
 
@@ -38,7 +38,7 @@ export default function Product({ product }) {
         Add to Cart
         <ShoppingBasket strokeWidth={1.5} />
       </PrimaryBtn>
-      <Quantity
+      <Counter
         label="Product quantity"
         initialCount={1}
         min={1}
