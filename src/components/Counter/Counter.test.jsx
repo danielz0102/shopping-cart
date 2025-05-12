@@ -40,6 +40,34 @@ describe('Props', () => {
       render(<Counter label="counter" onChange={{}} />),
     ).toThrowError()
   })
+
+  it('calls onChange with current count when the value changes', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(<Counter label="counter" initialCount={1} onChange={onChange} />)
+    const input = screen.getByRole('spinbutton')
+
+    await user.clear(input)
+    await user.type(input, '25')
+    await user.click(screen.getByRole('button', { name: 'decrement' }))
+    await user.click(screen.getByRole('button', { name: 'increment' }))
+    await user.click(screen.getByRole('button', { name: 'increment' }))
+
+    expect(onChange).toHaveBeenCalledWith(24)
+    expect(onChange).toHaveBeenCalledWith(25)
+    expect(onChange).toHaveBeenCalledWith(26)
+  })
+
+  it('updates the count when initialCount changes', () => {
+    const { rerender } = render(<Counter label="counter" initialCount={1} />)
+    const input = screen.getByRole('spinbutton')
+
+    expect(input).toHaveValue(1)
+
+    rerender(<Counter label="counter" initialCount={2} />)
+
+    expect(input).toHaveValue(2)
+  })
 })
 
 describe('Number input', () => {
@@ -119,23 +147,6 @@ it('has a button to increment', async () => {
   await user.click(screen.getByRole('button', { name: 'increment' }))
 
   expect(screen.getByRole('spinbutton')).toHaveValue(2)
-})
-
-it('calls onChange with current count when the value changes', async () => {
-  const user = userEvent.setup()
-  const onChange = vi.fn()
-  render(<Counter label="counter" initialCount={1} onChange={onChange} />)
-  const input = screen.getByRole('spinbutton')
-
-  await user.clear(input)
-  await user.type(input, '25')
-  await user.click(screen.getByRole('button', { name: 'decrement' }))
-  await user.click(screen.getByRole('button', { name: 'increment' }))
-  await user.click(screen.getByRole('button', { name: 'increment' }))
-
-  expect(onChange).toHaveBeenCalledWith(24)
-  expect(onChange).toHaveBeenCalledWith(25)
-  expect(onChange).toHaveBeenCalledWith(26)
 })
 
 describe('Decrement button', () => {

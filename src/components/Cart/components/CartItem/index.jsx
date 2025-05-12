@@ -1,9 +1,11 @@
 import styles from './CartItem.module.css'
+import { validatePositiveInteger } from '@/schemas/positiveInteger'
 
 import { useContext } from 'react'
 
 import { CartContext } from '@/providers/contexts'
-import { validatePositiveInteger } from '@/schemas/positiveInteger'
+
+import Counter from '@/components/Counter'
 
 export default function CartItem({ id }) {
   const { cart, utils } = useContext(CartContext)
@@ -15,6 +17,10 @@ export default function CartItem({ id }) {
 
   const { product, quantity } = item
 
+  function handleChange(newQuantity) {
+    utils.update(product.id, newQuantity)
+  }
+
   return (
     <li className={styles.cartItem}>
       <header>
@@ -25,22 +31,13 @@ export default function CartItem({ id }) {
       </header>
       <main>
         <p className="money">${product.price.toFixed(2)}</p>
-        <p aria-live="polite">Quantity: {quantity}</p>
-        <div>
-          <button onClick={() => utils.remove(product.id)}>Remove</button>
-          <button
-            aria-label="Increase"
-            onClick={() => utils.increase(product.id)}
-          >
-            +
-          </button>
-          <button
-            aria-label="Decrease"
-            onClick={() => utils.decrease(product.id)}
-          >
-            -
-          </button>
-        </div>
+        <Counter
+          label={'Item quantity'}
+          initialCount={quantity}
+          min={0}
+          onChange={handleChange}
+        />
+        <button onClick={() => utils.remove(product.id)}>Remove</button>
       </main>
     </li>
   )
