@@ -290,6 +290,18 @@ describe('update', () => {
 
     expect(result.current.cart[0].quantity).toBe(3)
   })
+
+  it('removes the product if quantity is 0', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
+    const { update } = result.current.utils
+    const { id } = result.current.cart[0].product
+
+    act(() => update(id, 0))
+
+    expect(result.current.cart).toEqual([])
+  })
 })
 
 describe('clear', () => {

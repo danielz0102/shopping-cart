@@ -69,6 +69,12 @@ export function useCart(initialCart = []) {
 
   function update(id, quantity) {
     validatePositiveInteger(id)
+
+    if (quantity === 0) {
+      remove(id)
+      return
+    }
+
     validatePositiveInteger(quantity)
 
     const found = cart.some((item) => item.product.id === id)
