@@ -2,6 +2,7 @@
   --spacing: 16px;
 
   width: 30vw;
+  min-width: 350px;
   height: 100vh;
 
   position: fixed;

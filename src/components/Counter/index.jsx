@@ -49,7 +49,7 @@ export default function Counter(props) {
   return (
     <div className={styles.counter}>
       <button aria-label="decrement" onClick={decrement}>
-        <Minus strokeWidth={1.5} />
+        <Minus className={styles.counterIcon} strokeWidth={1.5} />
       </button>
       <input
         id={id}
@@ -60,7 +60,7 @@ export default function Counter(props) {
         aria-label={label}
       />
       <button aria-label="increment" onClick={increment}>
-        <Plus strokeWidth={1.5} />
+        <Plus className={styles.counterIcon} strokeWidth={1.5} />
       </button>
     </div>
   )

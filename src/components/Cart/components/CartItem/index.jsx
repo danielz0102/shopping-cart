@@ -42,7 +42,7 @@ export default function CartItem({ id }) {
             onChange={handleChange}
           />
           <Button type="danger" onClick={() => utils.remove(product.id)}>
-            <Trash2 strokeWidth={1.5} />
+            <Trash2 className={styles.trashIcon} strokeWidth={1.5} />
           </Button>
         </div>
       </main>

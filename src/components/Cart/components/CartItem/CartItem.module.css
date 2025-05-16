@@ -37,3 +37,8 @@
   display: flex;
   gap: 8px;
 }
+
+.trash-icon {
+  min-width: 18px;
+  min-height: 18px;
+}
