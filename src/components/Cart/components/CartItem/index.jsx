@@ -16,6 +16,7 @@ export default function CartItem({ id }) {
   if (!item) return null
 
   const { product, quantity } = item
+  const finalPrice = product.price * quantity
 
   function handleChange(newQuantity) {
     utils.update(product.id, newQuantity)
@@ -30,7 +31,7 @@ export default function CartItem({ id }) {
         </div>
       </header>
       <main>
-        <p className="money">${product.price.toFixed(2)}</p>
+        <p className="money">${finalPrice.toFixed(2)}</p>
         <Counter
           label={'Item quantity'}
           initialCount={quantity}

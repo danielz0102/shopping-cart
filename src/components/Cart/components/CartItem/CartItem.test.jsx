@@ -33,10 +33,11 @@ test('returns null if item is not found', () => {
 
 test('renders all item info', () => {
   renderItem(mockItem.product.id)
+  const finalPrice = mockItem.product.price * mockItem.quantity
 
   screen.getByText(mockItem.product.title)
   screen.getByRole('img', { name: mockItem.product.title })
-  screen.getByText(`$${mockItem.product.price.toFixed(2)}`)
+  screen.getByText(`$${finalPrice.toFixed(2)}`)
   screen.getByText(new RegExp(`quantity.*${mockItem.quantity}`, 'i'))
 })
 

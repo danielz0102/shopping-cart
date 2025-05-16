@@ -2,5 +2,6 @@
 
 ## TODO
 
-- Improve styles
+- Fix price by amount in cart item
+- Style checkout
 - Deploy
