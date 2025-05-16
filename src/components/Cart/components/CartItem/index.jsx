@@ -6,6 +6,8 @@ import { useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
 import Counter from '@/components/Counter'
+import Button from '@/components/UI/Button'
+import { Trash2 } from 'lucide-react'
 
 export default function CartItem({ id }) {
   const { cart, utils } = useContext(CartContext)
@@ -32,13 +34,17 @@ export default function CartItem({ id }) {
       </header>
       <main>
         <p className="money">${finalPrice.toFixed(2)}</p>
-        <Counter
-          label={'Item quantity'}
-          initialCount={quantity}
-          min={0}
-          onChange={handleChange}
-        />
-        <button onClick={() => utils.remove(product.id)}>Remove</button>
+        <div className={styles.actions}>
+          <Counter
+            label={'Item quantity'}
+            initialCount={quantity}
+            min={0}
+            onChange={handleChange}
+          />
+          <Button type="danger" onClick={() => utils.remove(product.id)}>
+            <Trash2 strokeWidth={1.5} />
+          </Button>
+        </div>
       </main>
     </li>
   )

@@ -32,3 +32,8 @@
     object-fit: contain;
   }
 }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
