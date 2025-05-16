@@ -12,6 +12,9 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     setupFiles: './tests/setup.js',
+    coverage: {
+      reportsDirectory: './tests/coverage',
+    },
   },
   css: {
     modules: {
