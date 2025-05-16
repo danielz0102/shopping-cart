@@ -33,27 +33,6 @@ main {
   }
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-}
-
-.primary-btn {
-  width: 100%;
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 16px;
-  transition: background-color 0.25s ease-out;
-
-  &:hover {
-    background-color: var(--primary-light);
-  }
-}
-
 .money {
   color: var(--money);
 }

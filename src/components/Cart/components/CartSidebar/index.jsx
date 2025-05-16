@@ -1,10 +1,12 @@
 import styles from './CartSidebar.module.css'
-import { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { X, Receipt } from 'lucide-react'
 
+import { useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
+
+import { X, Receipt, Trash2 } from 'lucide-react'
 import CartItem from '../CartItem'
+import PrimaryBtn from '@/components/UI/PrimaryButton'
 
 export default function CartSidebar({ open = true, onClose }) {
   const { cart, utils } = useContext(CartContext)
@@ -35,17 +37,20 @@ export default function CartSidebar({ open = true, onClose }) {
         ))}
       </ul>
       {!isEmpty && (
-        <div className="container">
+        <div className={styles.info}>
           <p>
             Total: <span className="money">${total.toFixed(2)}</span>
           </p>
-          <Link to="/checkout" onClick={onClose} className="link">
-            <Receipt strokeWidth={1} />
-            Checkout
-          </Link>
-          <button className="primary-btn" onClick={utils.clear}>
-            Clear
-          </button>
+          <div className={styles.actions}>
+            <Link to="/checkout" onClick={onClose} className="link">
+              <Receipt strokeWidth={1} />
+              Checkout
+            </Link>
+            <PrimaryBtn onClick={utils.clear}>
+              Clear
+              <Trash2 strokeWidth={1.5} />
+            </PrimaryBtn>
+          </div>
         </div>
       )}
     </aside>
