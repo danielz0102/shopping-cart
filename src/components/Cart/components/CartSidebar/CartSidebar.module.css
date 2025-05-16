@@ -18,7 +18,9 @@
   gap: var(--spacing);
 
   transform: translateX(0);
-  transition: transform 0.25s;
+  transition-property: transform, display;
+  transition-duration: 0.25s;
+  transition-behavior: allow-discrete;
 
   & h2 {
     text-align: center;
@@ -33,11 +35,12 @@
     overflow-y: auto;
   }
 
-  @starting-style {
+  &.hidden {
     transform: translateX(100%);
+    display: none;
   }
 
-  &.hidden {
+  @starting-style {
     transform: translateX(100%);
   }
 }
