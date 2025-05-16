@@ -2,5 +2,7 @@
 
 ## TODO
 
-- Improve styles
+- Style checkout
+- Add dark mode
+- Check test coverage
 - Deploy

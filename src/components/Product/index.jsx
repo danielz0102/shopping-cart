@@ -1,11 +1,16 @@
 import styles from './Product.module.css'
-import { useState, useContext } from 'react'
 import { productSchema } from '@/schemas/product'
+
+import { useRef, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
+
+import Counter from '../Counter'
+import { ShoppingBasket } from 'lucide-react'
+import Button from '../UI/Button'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
-  const [quantity, setQuantity] = useState(1)
+  const quantity = useRef(1)
 
   const productIsValid = productSchema.safeParse(product)
 
@@ -13,59 +18,32 @@ export default function Product({ product }) {
     throw new Error('product is not valid')
   }
 
-  function increment() {
-    setQuantity((prev) => prev + 1)
-  }
-
-  function decrement() {
-    if (quantity <= 1) return
-    setQuantity((prev) => prev - 1)
-  }
-
-  function handleChange(event) {
-    const value = event.target.value
-    setQuantity(Number(value))
-  }
-
-  function validateQuantity(event) {
-    const value = event.target.value
-    const isValid = value > 0 && !isNaN(value)
-
-    setQuantity(isValid ? Number(value) : 1)
-  }
-
   function addToCart() {
-    utils.add({ ...product }, quantity)
+    utils.add({ ...product }, quantity.current)
+  }
+
+  function handleCounterChange(count) {
+    quantity.current = count
   }
 
   return (
     <article className={styles.product}>
-      <picture>
+      <div className={styles.imgContainer}>
         <img src={product.image} alt={product.title} />
-      </picture>
+      </div>
       <h2>{product.title}</h2>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
-      <button onClick={addToCart}>Add to Cart</button>
-      <div>
-        <label htmlFor="quantity">Quantity</label>
-        <input
-          id="quantity"
-          type="number"
-          value={quantity}
-          onChange={handleChange}
-          onBlur={validateQuantity}
-          aria-live="polite"
-        />
-      </div>
-      <div>
-        <button type="button" aria-label="increment" onClick={increment}>
-          +
-        </button>
-        <button type="button" aria-label="decrement" onClick={decrement}>
-          -
-        </button>
-      </div>
+      <p className={styles.description}>{product.description}</p>
+      <p className="money">${product.price.toFixed(2)}</p>
+      <Button onClick={addToCart}>
+        Add to Cart
+        <ShoppingBasket strokeWidth={1.5} />
+      </Button>
+      <Counter
+        label="Product quantity"
+        initialCount={1}
+        min={1}
+        onChange={handleCounterChange}
+      />
     </article>
   )
 }

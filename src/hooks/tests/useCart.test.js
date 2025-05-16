@@ -251,6 +251,59 @@ describe('decrease', () => {
   })
 })
 
+describe('update', () => {
+  it('receives an id', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { update } = result.current.utils
+
+    expect(() => update()).toThrow()
+    expect(() => update({}, 1)).toThrow()
+    expect(() => update('123', 1)).toThrow()
+    expect(() => update(-10, 1)).toThrow()
+  })
+
+  it('receives a quantity', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { update } = result.current.utils
+    const { id } = result.current.cart[0].product
+
+    expect(() => update(id)).toThrow()
+    expect(() => update(id, {})).toThrow()
+    expect(() => update(id, -10)).toThrow()
+  })
+
+  it('throws an error if the product is not found', () => {
+    const { result } = renderHook(() => useCart(mockCart))
+    const { update } = result.current.utils
+
+    expect(() => update(999, 5)).toThrow()
+  })
+
+  it('updates the quantity of a product', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
+    const { update } = result.current.utils
+    const { id } = result.current.cart[0].product
+
+    act(() => update(id, 3))
+
+    expect(result.current.cart[0].quantity).toBe(3)
+  })
+
+  it('removes the product if quantity is 0', () => {
+    const { result } = renderHook(() =>
+      useCart([{ product: mockProduct, quantity: 1 }]),
+    )
+    const { update } = result.current.utils
+    const { id } = result.current.cart[0].product
+
+    act(() => update(id, 0))
+
+    expect(result.current.cart).toEqual([])
+  })
+})
+
 describe('clear', () => {
   it('removes all products', () => {
     const { result } = renderHook(() => useCart(mockCart))

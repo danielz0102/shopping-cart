@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { CartContext } from '@/providers/contexts'
-import CartItem from '../CartItem'
+import CartItem from '../Cart/components/CartItem'
 import PaymentAlert from '../PaymentAlert'
 import Toast from '../Toast'
 

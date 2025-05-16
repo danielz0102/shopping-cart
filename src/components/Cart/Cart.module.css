@@ -3,6 +3,18 @@
   border: none;
   background-color: transparent;
   color: var(--primary);
+  border-radius: 8px;
+
+  transition: transform 0.25s ease-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+  }
 }
 
 .items-counter {

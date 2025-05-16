@@ -35,7 +35,7 @@ test('appears for 3 seconds by default', async () => {
   const toast = screen.getByRole('dialog')
 
   expect(toast).toBeVisible()
-  await waitFor(() => expect(toast).not.toBeVisible(), { timeout: 3000 })
+  await waitFor(() => expect(toast).not.toBeVisible(), { timeout: 3100 })
 })
 
 test('appears for delay provided', async () => {

@@ -1,0 +1,41 @@
+.button {
+  --color: var(--primary);
+  --hover: var(--primary-light);
+  --active: var(--primary-dark);
+  --focus: var(--primary-light);
+
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color);
+  color: #fff;
+  display: flex;
+  gap: 8px;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.25s;
+
+  &:hover {
+    box-shadow: 0 0 10px var(--hover);
+  }
+
+  &:active {
+    background-color: var(--active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+.danger {
+  --color: var(--danger);
+  --hover: var(--danger-light);
+  --active: var(--danger-dark);
+  --focus: var(--danger-light);
+}
+
+.secondary {
+  --color: var(--primary-light);
+  color: #000;
+}
