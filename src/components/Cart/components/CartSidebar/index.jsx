@@ -42,14 +42,14 @@ export default function CartSidebar({ open = true, onClose }) {
             Total: <span className="money">${total.toFixed(2)}</span>
           </p>
           <div className={styles.actions}>
+            <Button onClick={utils.clear} type="secondary">
+              Clear
+              <Trash2 strokeWidth={1.5} />
+            </Button>
             <Link to="/checkout" onClick={onClose} className="link">
               <Receipt strokeWidth={1} />
               Checkout
             </Link>
-            <Button onClick={utils.clear}>
-              Clear
-              <Trash2 strokeWidth={1.5} />
-            </Button>
           </div>
         </div>
       )}

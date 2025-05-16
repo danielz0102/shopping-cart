@@ -34,3 +34,8 @@
   --active: var(--danger-dark);
   --focus: var(--danger-light);
 }
+
+.secondary {
+  --color: var(--primary-light);
+  color: #000;
+}

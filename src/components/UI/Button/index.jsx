@@ -3,6 +3,7 @@ import styles from './Button.module.css'
 const BUTTON_TYPES = {
   PRIMARY: 'primary',
   TERTIARY: 'danger',
+  SECONDARY: 'secondary',
 }
 
 export default function Button({
