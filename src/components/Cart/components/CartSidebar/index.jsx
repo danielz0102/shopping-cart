@@ -23,7 +23,10 @@ export default function CartSidebar({ open = true, onClose }) {
   const total = utils.getTotal()
 
   return (
-    <aside className={`${styles.sidebar} ${!open ? styles.hidden : ''}`}>
+    <aside
+      className={`${styles.sidebar} ${!open ? styles.hidden : ''}`}
+      hidden={!open}
+    >
       <button className={styles.closeBtn} aria-label="Close" onClick={onClose}>
         <X strokeWidth={1} />
       </button>
