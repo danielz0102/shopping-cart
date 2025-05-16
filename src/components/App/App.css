@@ -4,6 +4,10 @@
   --primary-light: #8ec5ff;
   --primary-lighter: #d0e7ff;
   --money: #1c9950;
+  --danger: #e63946;
+  --danger-dark: #a72c3d;
+  --danger-light: #ff6b6b;
+  --danger-lighter: #ffb3b3;
 }
 
 #root {

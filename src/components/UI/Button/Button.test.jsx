@@ -2,29 +2,44 @@ import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import PrimaryButton from '.'
+import Button from '.'
 
 test('rendres children properly', () => {
-  render(<PrimaryButton>Test</PrimaryButton>)
+  render(<Button>Test</Button>)
   screen.getByRole('button', { name: /test/i })
 })
 
 test('receives an onClick function', () => {
+  expect(() => render(<Button onClick={1}>Test</Button>)).toThrow()
   expect(() => {
-    render(<PrimaryButton onClick={1}>Test</PrimaryButton>)
+    render(<Button onClick={'123'}>Test</Button>)
   }).toThrow()
   expect(() => {
-    render(<PrimaryButton onClick={'123'}>Test</PrimaryButton>)
+    render(<Button onClick={{}}>Test</Button>)
   }).toThrow()
-  expect(() => {
-    render(<PrimaryButton onClick={{}}>Test</PrimaryButton>)
-  }).toThrow()
+})
+
+test('throws an error if type is not a string', () => {
+  expect(() =>
+    render(
+      <Button onClick={1} type={1}>
+        Test
+      </Button>,
+    ),
+  ).toThrow()
+  expect(() =>
+    render(
+      <Button onClick={1} type={{}}>
+        Test
+      </Button>,
+    ),
+  ).toThrow()
 })
 
 test('calls onClick function when clicked', async () => {
   const user = userEvent.setup()
   const onClick = vi.fn()
-  render(<PrimaryButton onClick={onClick}>Test</PrimaryButton>)
+  render(<Button onClick={onClick}>Test</Button>)
 
   await user.click(screen.getByRole('button', { name: /test/i }))
 

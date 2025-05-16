@@ -6,7 +6,7 @@ import { CartContext } from '@/providers/contexts'
 
 import { X, Receipt, Trash2 } from 'lucide-react'
 import CartItem from '../CartItem'
-import PrimaryBtn from '@/components/UI/PrimaryButton'
+import Button from '@/components/UI/Button'
 
 export default function CartSidebar({ open = true, onClose }) {
   const { cart, utils } = useContext(CartContext)
@@ -43,10 +43,10 @@ export default function CartSidebar({ open = true, onClose }) {
               <Receipt strokeWidth={1} />
               Checkout
             </Link>
-            <PrimaryBtn onClick={utils.clear}>
+            <Button onClick={utils.clear}>
               Clear
               <Trash2 strokeWidth={1.5} />
-            </PrimaryBtn>
+            </Button>
           </div>
         </div>
       )}

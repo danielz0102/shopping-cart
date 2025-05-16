@@ -6,7 +6,7 @@ import { CartContext } from '@/providers/contexts'
 
 import Counter from '../Counter'
 import { ShoppingBasket } from 'lucide-react'
-import PrimaryBtn from '../UI/PrimaryButton'
+import Button from '../UI/Button'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
@@ -34,10 +34,10 @@ export default function Product({ product }) {
       <h2>{product.title}</h2>
       <p className={styles.description}>{product.description}</p>
       <p className="money">${product.price.toFixed(2)}</p>
-      <PrimaryBtn onClick={addToCart}>
+      <Button onClick={addToCart}>
         Add to Cart
         <ShoppingBasket strokeWidth={1.5} />
-      </PrimaryBtn>
+      </Button>
       <Counter
         label="Product quantity"
         initialCount={1}
