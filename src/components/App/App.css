@@ -22,6 +22,7 @@ main {
   gap: 4px;
   color: var(--primary);
   text-decoration: none;
+  border-radius: 4px;
   transition: transform 0.25s ease-out;
 
   &:hover {
@@ -30,6 +31,11 @@ main {
 
   &:active {
     color: var(--primary-light);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
   }
 }
 
