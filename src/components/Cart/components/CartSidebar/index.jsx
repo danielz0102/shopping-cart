@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
-import { X, Receipt, Trash2 } from 'lucide-react'
+import { Receipt, Trash2 } from 'lucide-react'
 import CartItem from '../CartItem'
 import Button from '@/components/UI/Button'
+import CloseBtn from '@/components/UI/CloseBtn'
 
 export default function CartSidebar({ open = true, onClose }) {
   const { cart, utils } = useContext(CartContext)
@@ -27,9 +28,7 @@ export default function CartSidebar({ open = true, onClose }) {
       className={`${styles.sidebar} ${!open ? styles.hidden : ''}`}
       hidden={!open}
     >
-      <button className={styles.closeBtn} aria-label="Close" onClick={onClose}>
-        <X strokeWidth={1} />
-      </button>
+      <CloseBtn className={styles.closeBtn} onClick={onClose} />
       <h2>{isEmpty ? 'The cart is empty' : 'Your products'}</h2>
       <ul>
         {cart?.map(({ product }) => (

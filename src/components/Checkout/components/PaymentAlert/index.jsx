@@ -1,5 +1,7 @@
 import styles from './PaymentAlert.module.css'
+
 import Button from '@/components/UI/Button'
+import CloseBtn from '@/components/UI/CloseBtn'
 import { Check } from 'lucide-react'
 
 export default function PaymentAlert({ open = true, onConfirm, onClose }) {
@@ -18,13 +20,7 @@ export default function PaymentAlert({ open = true, onConfirm, onClose }) {
   return (
     <dialog className={styles.alert} open={open}>
       <h1>Confirm payment</h1>
-      <button
-        className={styles.closeButton}
-        aria-label="Close"
-        onClick={onClose}
-      >
-        x
-      </button>
+      <CloseBtn className={styles.closeButton} onClick={onClose} />
       <Button className={styles.confirmButton} onClick={onConfirm}>
         Confirm <Check strokeWidth={1.5} />
       </Button>
