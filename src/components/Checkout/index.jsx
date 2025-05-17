@@ -8,7 +8,7 @@ import CartItem from '../Cart/components/CartItem'
 import PaymentAlert from './components/PaymentAlert'
 import Toast from '../UI/Toast'
 import Button from '../UI/Button'
-import { CreditCard } from 'lucide-react'
+import { Receipt } from 'lucide-react'
 
 export default function Checkout() {
   const [showAlert, setShowAlert] = useState(false)
@@ -53,7 +53,7 @@ export default function Checkout() {
             onClick={() => setShowAlert((prev) => !prev)}
           >
             Pay
-            <CreditCard size={28} strokeWidth={1.5} />
+            <Receipt size={28} strokeWidth={1.5} />
           </Button>
         </>
       )}
