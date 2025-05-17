@@ -53,7 +53,7 @@ export default function Checkout() {
             onClick={() => setShowAlert((prev) => !prev)}
           >
             Pay
-            <CreditCard strokeWidth={1.5} />
+            <CreditCard size={28} strokeWidth={1.5} />
           </Button>
         </>
       )}
