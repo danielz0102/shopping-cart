@@ -4,16 +4,20 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
+  display: grid;
+  place-items: center;
+  gap: 8px;
+
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   background-color: var(--background);
   width: 400px;
   border: none;
-}
 
-.alert h1 {
-  font-size: 1.5rem;
+  & h1 {
+    font-size: 1.5rem;
+  }
 }
 
 .closeButton {

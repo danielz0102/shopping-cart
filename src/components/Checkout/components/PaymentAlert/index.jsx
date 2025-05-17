@@ -1,5 +1,6 @@
 import styles from './PaymentAlert.module.css'
 import Button from '@/components/UI/Button'
+import { Check } from 'lucide-react'
 
 export default function PaymentAlert({ open = true, onConfirm, onClose }) {
   if (typeof onConfirm !== 'function') {
@@ -24,7 +25,9 @@ export default function PaymentAlert({ open = true, onConfirm, onClose }) {
       >
         x
       </button>
-      <Button onClick={onConfirm}>Confirm</Button>
+      <Button className={styles.confirmButton} onClick={onConfirm}>
+        Confirm <Check strokeWidth={1.5} />
+      </Button>
     </dialog>
   )
 }
