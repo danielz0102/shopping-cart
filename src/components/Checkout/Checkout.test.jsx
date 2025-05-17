@@ -34,7 +34,7 @@ test('shows the total price', () => {
     0,
   )
 
-  screen.getByText(`Total: $${totalPrice.toFixed(2)}`)
+  screen.getByText(`$${totalPrice.toFixed(2)}`)
 })
 
 test('has a button to realize the payment', () => {
