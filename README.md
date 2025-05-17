@@ -4,5 +4,4 @@
 
 - Style checkout
 - Add dark mode
-- Check test coverage
 - Deploy
