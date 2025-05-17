@@ -25,6 +25,7 @@ export default function Checkout() {
 
   function handleConfirm() {
     setIsPaid(true)
+    setShowAlert(false)
     utils.clear()
   }
 
@@ -50,14 +51,19 @@ export default function Checkout() {
           <Button
             className={styles.button}
             onClick={() => setShowAlert((prev) => !prev)}
-            type="primary"
           >
             Pay
             <CreditCard strokeWidth={1.5} />
           </Button>
         </>
       )}
-      {showAlert && <PaymentAlert onConfirm={handleConfirm} />}
+      {showAlert && (
+        <PaymentAlert
+          open={showAlert}
+          onConfirm={handleConfirm}
+          onClose={() => setShowAlert(false)}
+        />
+      )}
       {isPaid && <Toast message="Payment confirmed" />}
     </main>
   )

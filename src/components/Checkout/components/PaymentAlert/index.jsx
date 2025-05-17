@@ -1,28 +1,30 @@
-import { useState } from 'react'
+import styles from './PaymentAlert.module.css'
+import Button from '@/components/UI/Button'
 
-export default function PaymentAlert({ onConfirm }) {
-  const [open, setOpen] = useState(true)
-
+export default function PaymentAlert({ open = true, onConfirm, onClose }) {
   if (typeof onConfirm !== 'function') {
     throw new Error('onConfirm must be a function')
   }
 
-  function close() {
-    setOpen(false)
+  if (typeof open !== 'boolean') {
+    throw new Error('open must be a boolean')
   }
 
-  function handleConfirm() {
-    onConfirm()
-    close()
+  if (typeof onClose !== 'function') {
+    throw new Error('onClose must be a function')
   }
 
   return (
-    <dialog open={open}>
+    <dialog className={styles.alert} open={open}>
       <h1>Confirm payment</h1>
-      <button aria-label="Close" onClick={close}>
+      <button
+        className={styles.closeButton}
+        aria-label="Close"
+        onClick={onClose}
+      >
         x
       </button>
-      <button onClick={handleConfirm}>Confirm</button>
+      <Button onClick={onConfirm}>Confirm</Button>
     </dialog>
   )
 }

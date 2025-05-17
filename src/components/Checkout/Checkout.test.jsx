@@ -10,7 +10,7 @@ vi.mock('../Cart/components/CartItem', () => ({
   default: ({ id }) => <div data-testid={id}>Item {id}</div>,
 }))
 
-vi.mock('../PaymentAlert', () => ({
+vi.mock('./components/PaymentAlert', () => ({
   default: () => <div data-testid="alert">Payment Alert</div>,
 }))
 
