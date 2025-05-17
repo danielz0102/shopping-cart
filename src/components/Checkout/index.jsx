@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { CartContext } from '@/providers/contexts'
 
 import CartItem from '../Cart/components/CartItem'
-import PaymentAlert from '../PaymentAlert'
-import Toast from '../Toast'
+import PaymentAlert from './components/PaymentAlert'
+import Toast from '../UI/Toast'
 import Button from '../UI/Button'
 import { CreditCard } from 'lucide-react'
 
