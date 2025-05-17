@@ -1,10 +1,14 @@
+import styles from './Checkout.module.css'
+
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-
 import { CartContext } from '@/providers/contexts'
+
 import CartItem from '../Cart/components/CartItem'
 import PaymentAlert from '../PaymentAlert'
 import Toast from '../Toast'
+import Button from '../UI/Button'
+import { CreditCard } from 'lucide-react'
 
 export default function Checkout() {
   const [showAlert, setShowAlert] = useState(false)
@@ -25,23 +29,28 @@ export default function Checkout() {
   }
 
   return (
-    <main>
-      <h2>{title}</h2>
+    <main className={styles.checkout}>
+      <h1>{title}</h1>
       {isPaid && (
         <>
           <p>Thanks for your purchase</p>
           <Link to="/shop">Back to Shop</Link>
         </>
       )}
-      <ul>
+      <ul className={styles.itemsList}>
         {cart.map(({ product }) => (
           <CartItem key={product.id} id={product.id} />
         ))}
       </ul>
       {!isEmpty && (
         <>
-          <p>{`Total: $${totalPrice.toFixed(2)}`}</p>
-          <button onClick={() => setShowAlert((prev) => !prev)}>Pay</button>
+          <p>
+            Total: <span className="money">${totalPrice.toFixed(2)}</span>
+          </p>
+          <Button onClick={() => setShowAlert((prev) => !prev)} type="primary">
+            Pay
+            <CreditCard strokeWidth={1.5} />
+          </Button>
         </>
       )}
       {showAlert && <PaymentAlert onConfirm={handleConfirm} />}
