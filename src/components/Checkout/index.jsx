@@ -47,7 +47,11 @@ export default function Checkout() {
           <p>
             Total: <span className="money">${totalPrice.toFixed(2)}</span>
           </p>
-          <Button onClick={() => setShowAlert((prev) => !prev)} type="primary">
+          <Button
+            className={styles.button}
+            onClick={() => setShowAlert((prev) => !prev)}
+            type="primary"
+          >
             Pay
             <CreditCard strokeWidth={1.5} />
           </Button>

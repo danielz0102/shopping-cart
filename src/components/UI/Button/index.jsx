@@ -10,6 +10,7 @@ export default function Button({
   children,
   onClick = () => {},
   type = BUTTON_TYPES.PRIMARY,
+  className = '',
 }) {
   if (typeof onClick !== 'function') {
     throw new TypeError('onClick prop must be a function')
@@ -19,10 +20,14 @@ export default function Button({
     throw new TypeError('type prop must be a string')
   }
 
+  if (typeof className !== 'string') {
+    throw new TypeError('className prop must be a string')
+  }
+
   return (
     <button
       type="button"
-      className={`${styles.button} ${styles[type]}`}
+      className={`${styles.button} ${styles[type]} ${className}`}
       onClick={onClick}
     >
       {children}

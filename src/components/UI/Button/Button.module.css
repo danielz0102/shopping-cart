@@ -10,6 +10,8 @@
   background-color: var(--color);
   color: #fff;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   transition-property: background-color, box-shadow;
   transition-duration: 0.25s;

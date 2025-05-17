@@ -19,6 +19,16 @@ test('receives an onClick function', () => {
   }).toThrow()
 })
 
+test('receives a className prop', () => {
+  expect(() => render(<Button className={1}>Test</Button>)).toThrow()
+  expect(() => {
+    render(<Button className={true}>Test</Button>)
+  }).toThrow()
+  expect(() => {
+    render(<Button className={{}}>Test</Button>)
+  }).toThrow()
+})
+
 test('throws an error if type is not a string', () => {
   expect(() =>
     render(
