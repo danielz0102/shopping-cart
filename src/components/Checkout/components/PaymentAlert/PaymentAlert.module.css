@@ -12,18 +12,22 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   background-color: var(--background);
-  width: 400px;
   border: none;
+  min-width: 300px;
 
   & h1 {
     font-size: 1.5rem;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(1px);
   }
 }
 
 .close-button {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   transition: transform 0.25s;
 
   &:hover {
