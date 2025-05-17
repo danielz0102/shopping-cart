@@ -3,12 +3,13 @@
   --hover: var(--primary-light);
   --active: var(--primary-dark);
   --focus: var(--primary-light);
+  --text: #fff;
 
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
   background-color: var(--color);
-  color: #fff;
+  color: var(--text);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,5 +40,5 @@
 
 .secondary {
   --color: var(--primary-light);
-  color: #000;
+  --text: var(--primary-dark);
 }
