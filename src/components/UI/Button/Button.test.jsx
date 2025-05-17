@@ -55,3 +55,8 @@ test('calls onClick function when clicked', async () => {
 
   expect(onClick).toHaveBeenCalled()
 })
+
+test('renders with the classname provided', () => {
+  render(<Button className="hola">Test</Button>)
+  expect(screen.getByRole('button')).toHaveClass('hola')
+})
