@@ -6,9 +6,16 @@ import { CartContext } from '@/providers/contexts'
 
 import CartItem from '../Cart/components/CartItem'
 import PaymentAlert from './components/PaymentAlert'
-import Toast from '../UI/Toast'
 import Button from '../UI/Button'
-import { Receipt } from 'lucide-react'
+import { Receipt, CheckCheck } from 'lucide-react'
+import toast, { Toaster } from 'react-hot-toast'
+
+const notify = () =>
+  toast('Payment confirmed!', {
+    icon: <CheckCheck className={styles.toastIcon} />,
+    duration: 3000,
+    position: 'bottom-right',
+  })
 
 export default function Checkout() {
   const [showAlert, setShowAlert] = useState(false)
@@ -27,6 +34,7 @@ export default function Checkout() {
     setIsPaid(true)
     setShowAlert(false)
     utils.clear()
+    notify()
   }
 
   return (
@@ -64,7 +72,7 @@ export default function Checkout() {
           onClose={() => setShowAlert(false)}
         />
       )}
-      {isPaid && <Toast message="Payment confirmed" />}
+      <Toaster />
     </main>
   )
 }

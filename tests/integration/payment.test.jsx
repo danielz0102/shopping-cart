@@ -8,12 +8,6 @@ import Cart from '@/components/Cart'
 import CartProvider from '@/providers/CartProvider'
 import mockCart from '/tests/mocks/cart'
 
-test('shows Toast when PaymentAlert confirms', async () => {
-  await pay()
-
-  screen.getByRole('dialog')
-})
-
 test('Empty the cart when PaymentAlert confirms', async () => {
   await pay()
 

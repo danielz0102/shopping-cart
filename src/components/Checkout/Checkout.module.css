@@ -22,3 +22,7 @@
 .check-icon {
   font-size: 1.5rem;
 }
+
+.toast-icon {
+  color: var(--money);
+}
