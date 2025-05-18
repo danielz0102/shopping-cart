@@ -7,7 +7,7 @@ import { CartContext } from '@/providers/contexts'
 import CartItem from '../Cart/components/CartItem'
 import PaymentAlert from './components/PaymentAlert'
 import Button from '../UI/Button'
-import { Receipt, CheckCheck } from 'lucide-react'
+import { Receipt, CheckCheck, ChevronLeft } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 
 const notify = () =>
@@ -42,8 +42,10 @@ export default function Checkout() {
       <h1>{title}</h1>
       {isPaid && (
         <>
-          <p>Thanks for your purchase</p>
-          <Link to="/shop">Back to Shop</Link>
+          <p className={styles.successMessage}>Thanks for your purchase</p>
+          <Link className="link" to="/shop">
+            <ChevronLeft /> Back to Shop
+          </Link>
         </>
       )}
       <ul className={styles.itemsList}>
