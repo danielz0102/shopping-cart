@@ -54,3 +54,7 @@ main {
 .money {
   color: var(--money);
 }
+
+.title {
+  font-weight: bold;
+}
