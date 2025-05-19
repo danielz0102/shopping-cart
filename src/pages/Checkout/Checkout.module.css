@@ -19,6 +19,15 @@
   gap: 8px;
 }
 
+.actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
 .button {
   --size: 1.25rem;
 

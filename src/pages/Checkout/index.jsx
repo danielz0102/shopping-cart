@@ -70,16 +70,18 @@ export default function Checkout() {
               <CartItem key={product.id} id={product.id} />
             ))}
           </ul>
-          <p>
-            Total: <span className="money">${totalPrice.toFixed(2)}</span>
-          </p>
-          <Button
-            className={styles.button}
-            onClick={() => setShowAlert((prev) => !prev)}
-          >
-            Pay
-            <Receipt size={28} strokeWidth={1.5} />
-          </Button>
+          <div className={styles.actions}>
+            <p>
+              Total: <span className="money">${totalPrice.toFixed(2)}</span>
+            </p>
+            <Button
+              className={styles.button}
+              onClick={() => setShowAlert((prev) => !prev)}
+            >
+              Pay
+              <Receipt size={28} strokeWidth={1.5} />
+            </Button>
+          </div>
         </>
       )}
       {showAlert && (
