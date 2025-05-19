@@ -2,6 +2,5 @@
 
 ## TODO
 
-- Style checkout
 - Add dark mode
 - Deploy
