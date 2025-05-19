@@ -29,7 +29,9 @@ export default function CartSidebar({ open = true, onClose }) {
       hidden={!open}
     >
       <CloseBtn className={styles.closeBtn} onClick={onClose} />
-      <h2>{isEmpty ? 'The cart is empty' : 'Your products'}</h2>
+      <h2 className="title">
+        {isEmpty ? 'The cart is empty' : 'Your products'}
+      </h2>
       <ul>
         {cart?.map(({ product }) => (
           <CartItem key={product.id} id={product.id} />
