@@ -4,7 +4,11 @@ import { MemoryRouter } from 'react-router-dom'
 import Navbar from '@/components/Navbar'
 
 vi.mock('./components/Cart', () => ({
-  default: () => <div data-testid="1">Cart</div>,
+  default: () => <div data-testid="cart">Cart</div>,
+}))
+
+vi.mock('./components/ThemeToggle', () => ({
+  default: () => <button data-testid="toggle-theme">Toggle Theme</button>,
 }))
 
 test('has links to home and shop page', () => {
@@ -17,11 +21,20 @@ test('has links to home and shop page', () => {
   screen.getByRole('link', { name: /shop/i })
 })
 
-test('displays the cart', () => {
+test('has the cart', () => {
   render(
     <MemoryRouter>
       <Navbar />
     </MemoryRouter>,
   )
-  screen.getByTestId(1, { name: /cart/i })
+  screen.getByTestId('cart')
+})
+
+test('has a button to toggle theme', () => {
+  render(
+    <MemoryRouter>
+      <Navbar />
+    </MemoryRouter>,
+  )
+  screen.getByTestId('toggle-theme')
 })

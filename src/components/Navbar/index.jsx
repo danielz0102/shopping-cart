@@ -3,6 +3,7 @@ import { House, Store } from 'lucide-react'
 
 import styles from './Navbar.module.css'
 import Cart from './components/Cart'
+import ThemeToggle from './components/ThemeToggle'
 
 export default function Navbar() {
   const location = useLocation()
@@ -24,6 +25,7 @@ export default function Navbar() {
           </Link>
         </li>
       </ul>
+      <ThemeToggle />
       <Cart />
     </nav>
   )
