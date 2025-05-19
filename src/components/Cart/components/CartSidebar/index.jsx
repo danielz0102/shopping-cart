@@ -1,6 +1,7 @@
 import styles from './CartSidebar.module.css'
-import { Link } from 'react-router-dom'
+import emtpyCart from '@/assets/empty-cart.svg'
 
+import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
@@ -25,34 +26,40 @@ export default function CartSidebar({ open = true, onClose }) {
 
   return (
     <aside
-      className={`${styles.sidebar} ${!open ? styles.hidden : ''}`}
+      className={`${styles.sidebar} ${!open ? styles.hidden : ''} ${isEmpty ? styles.empty : ''}`}
       hidden={!open}
     >
       <CloseBtn className={styles.closeBtn} onClick={onClose} />
-      <h2 className="title">
-        {isEmpty ? 'The cart is empty' : 'Your products'}
-      </h2>
-      <ul>
-        {cart?.map(({ product }) => (
-          <CartItem key={product.id} id={product.id} />
-        ))}
-      </ul>
-      {!isEmpty && (
-        <div className={styles.info}>
-          <p>
-            Total: <span className="money">${total.toFixed(2)}</span>
-          </p>
-          <div className={styles.actions}>
-            <Button onClick={utils.clear} type="secondary">
-              Clear
-              <Trash2 strokeWidth={1.5} />
-            </Button>
-            <Link to="/checkout" onClick={onClose} className="link">
-              <Receipt strokeWidth={1} />
-              Checkout
-            </Link>
+      {isEmpty ? (
+        <>
+          <h2 className="title">The car is empty</h2>
+          <img src={emtpyCart} alt="" />
+          <p className="subtitle">Add products in the shop</p>
+        </>
+      ) : (
+        <>
+          <h2 className="title">Your products</h2>
+          <ul>
+            {cart?.map(({ product }) => (
+              <CartItem key={product.id} id={product.id} />
+            ))}
+          </ul>
+          <div className={styles.info}>
+            <p>
+              Total: <span className="money">${total.toFixed(2)}</span>
+            </p>
+            <div className={styles.actions}>
+              <Button onClick={utils.clear} type="secondary">
+                Clear
+                <Trash2 strokeWidth={1.5} />
+              </Button>
+              <Link to="/checkout" onClick={onClose} className="link">
+                <Receipt strokeWidth={1} />
+                Checkout
+              </Link>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </aside>
   )

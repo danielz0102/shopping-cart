@@ -36,14 +36,19 @@
     overflow-y: auto;
   }
 
-  &.hidden {
-    transform: translateX(100%);
-    display: none;
-  }
-
   @starting-style {
     transform: translateX(100%);
   }
+}
+
+.sidebar.hidden {
+  transform: translateX(100%);
+  display: none;
+}
+
+.sidebar.empty {
+  align-items: center;
+  justify-content: center;
 }
 
 .close-btn {

@@ -73,3 +73,8 @@ main {
 .title {
   font-weight: bold;
 }
+
+.subtitle {
+  color: var(--text-secondary);
+  font-weight: 500;
+}

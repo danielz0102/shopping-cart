@@ -2,7 +2,7 @@
 
 ## TODO
 
-- Add empty state to sidebar
-- Add home page
+- Refactor components folder
 - Add dark mode
+- Add home page
 - Deploy
