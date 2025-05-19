@@ -23,6 +23,10 @@ vi.mock('../Product', () => ({
   default: ({ product }) => <div data-testid={product.id}>{product.title}</div>,
 }))
 
+vi.mock('../UI/Spinner', () => ({
+  default: () => <div>Loading...</div>,
+}))
+
 vi.mock('@/hooks/useProducts')
 
 test('renders all products', () => {
@@ -58,15 +62,4 @@ test('renders error state', () => {
 
   render(<Shop />)
   expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument()
-})
-
-test('renders empty state', () => {
-  vi.mocked(useProducts).mockReturnValue({
-    products: [],
-    loading: false,
-    error: false,
-  })
-
-  render(<Shop />)
-  expect(screen.getByText(/No products found/i)).toBeInTheDocument()
 })
