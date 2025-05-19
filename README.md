@@ -2,8 +2,7 @@
 
 ## TODO
 
-- Improve error state
-- Improve focus button state
+- Fix navbar
 - Add home page
 - Add dark mode
 - Deploy

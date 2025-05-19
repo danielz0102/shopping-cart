@@ -41,6 +41,10 @@
 }
 
 .secondary {
-  --color: var(--primary-light);
+  --color: var(--primary-lighter);
   --text: var(--primary-dark);
+  --hover: transparent;
+  --active: var(--background);
+  
+  border: 1px solid var(--color);
 }
