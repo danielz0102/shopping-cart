@@ -1,12 +1,14 @@
-import { useState, useContext } from 'react'
-import { ShoppingCart } from 'lucide-react'
-
 import styles from './Cart.module.css'
+
+import { useState, useContext } from 'react'
+import { CartContext, ThemeContext } from '@/providers/contexts'
+
+import { ShoppingCart } from 'lucide-react'
 import Sidebar from '../Sidebar'
-import { CartContext } from '@/providers/contexts'
 
 export default function Cart() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { isDark } = useContext(ThemeContext)
   const { cart } = useContext(CartContext)
 
   const quantity = cart.reduce((acc, item) => acc + item.quantity, 0)
@@ -27,7 +29,7 @@ export default function Cart() {
         onClick={handleCartClick}
       >
         <ShoppingCart strokeWidth={1} />
-        <span className={styles.itemsCounter}>
+        <span className={`${styles.itemsCounter} ${isDark ? styles.dark : ''}`}>
           {quantity < 100 ? quantity : '+99'}
         </span>
       </button>

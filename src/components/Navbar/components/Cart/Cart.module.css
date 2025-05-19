@@ -2,7 +2,7 @@
   position: relative;
   border: none;
   background-color: transparent;
-  color: var(--primary);
+  color: var(--link);
   border-radius: 8px;
 
   transition: transform 0.1s ease-in-out;
@@ -13,21 +13,27 @@
 
   &:focus-visible {
     outline: none;
-    filter: drop-shadow(2px 2px 0 var(--primary-light));
+    filter: drop-shadow(3px 3px 0 var(--link-active));
   }
 }
 
 .items-counter {
+  --foreground: #fff;
+
   position: absolute;
   top: -10px;
   right: -10px;
   font-size: 0.6rem;
-  background-color: var(--primary);
-  color: #fff;
+  background-color: var(--link);
+  color: var(--foreground);
   padding: 4px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   display: grid;
   place-content: center;
+}
+
+.items-counter.dark {
+  --foreground: #000;
 }

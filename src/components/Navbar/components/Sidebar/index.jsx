@@ -3,7 +3,7 @@ import emtpyCart from '@/assets/empty-cart.svg'
 
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
-import { CartContext } from '@/providers/contexts'
+import { CartContext, ThemeContext } from '@/providers/contexts'
 
 import { Receipt, Trash2 } from 'lucide-react'
 import CartItem from '@/components/CartItem'
@@ -12,6 +12,7 @@ import CloseBtn from '@/components/UI/CloseBtn'
 
 export default function CartSidebar({ open = true, onClose }) {
   const { cart, utils } = useContext(CartContext)
+  const { isDark } = useContext(ThemeContext)
 
   if (typeof open !== 'boolean') {
     throw new TypeError(`Prop 'open' must be a boolean`)
@@ -26,7 +27,7 @@ export default function CartSidebar({ open = true, onClose }) {
 
   return (
     <aside
-      className={`${styles.sidebar} ${!open ? styles.hidden : ''} ${isEmpty ? styles.empty : ''}`}
+      className={`${styles.sidebar} ${!open ? styles.hidden : ''} ${isEmpty ? styles.empty : ''} ${isDark ? styles.dark : ''}`}
       hidden={!open}
     >
       <CloseBtn className={styles.closeBtn} onClick={onClose} />

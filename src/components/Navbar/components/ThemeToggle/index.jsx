@@ -19,7 +19,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={`${isDark ? 'Dark mode' : 'Light mode'}`}
     >
-      <Icon strokeWidth={1} color="var(--primary)" />
+      <Icon strokeWidth={1} color="var(--link)" />
     </button>
   )
 }

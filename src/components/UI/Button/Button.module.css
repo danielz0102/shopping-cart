@@ -1,15 +1,15 @@
 .button {
-  --color: var(--primary);
-  --hover: var(--primary-light);
-  --active: var(--primary-dark);
-  --focus: var(--primary-light);
-  --text: #fff;
+  --background: var(--primary);
+  --background-active: var(--primary-dark);
+  --shadow-hover: var(--primary-light);
+  --shadow-focus: var(--primary-light);
+  --foreground: #fff;
 
   padding: 8px 16px;
-  border: none;
+  border: 1px solid var(--background);
   border-radius: 8px;
-  background-color: var(--color);
-  color: var(--text);
+  background-color: var(--background);
+  color: var(--foreground);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,33 +18,35 @@
   transition-duration: 0.25s;
 
   &:hover {
-    box-shadow: 0 0 10px var(--hover);
+    box-shadow: 0 0 10px var(--shadow-hover);
   }
 
   &:active {
-    background-color: var(--active);
+    background-color: var(--background-active);
   }
 
   &:focus-visible {
     transition: none;
     transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 var(--focus);
+    box-shadow: 5px 5px 0 var(--shadow-focus);
     outline: none;
   }
 }
 
 .danger {
-  --color: var(--danger);
-  --hover: var(--danger-light);
-  --active: var(--danger-dark);
-  --focus: var(--danger-light);
+  --background: var(--danger);
+  --shadow-hover: var(--danger-light);
+  --background-active: var(--danger-dark);
+  --shadow-focus: var(--danger-light);
 }
 
 .secondary {
-  --color: var(--primary-lighter);
-  --text: var(--primary-dark);
-  --hover: transparent;
-  --active: var(--background);
-  
-  border: 1px solid var(--color);
+  --background: var(--primary-lighter);
+  --foreground: var(--primary-dark);
+  --shadow-hover: transparent;
+  --background-active: transparent;
+}
+
+.secondary.dark:active {
+  --foreground: var(--primary-lighter);
 }

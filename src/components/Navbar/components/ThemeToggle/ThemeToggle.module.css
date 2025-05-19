@@ -1,4 +1,14 @@
 .theme-toggle {
   border: none;
   background: none;
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: none;
+    filter: drop-shadow(3px 3px 0 var(--link-active));
+  }
 }

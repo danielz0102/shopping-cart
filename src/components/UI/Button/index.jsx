@@ -1,5 +1,8 @@
 import styles from './Button.module.css'
 
+import { useContext } from 'react'
+import { ThemeContext } from '@/providers/contexts'
+
 const BUTTON_TYPES = {
   PRIMARY: 'primary',
   TERTIARY: 'danger',
@@ -24,10 +27,12 @@ export default function Button({
     throw new TypeError('className prop must be a string')
   }
 
+  const { isDark } = useContext(ThemeContext)
+
   return (
     <button
       type="button"
-      className={`${styles.button} ${styles[type]} ${className}`}
+      className={`${styles.button} ${styles[type]} ${className} ${isDark ? styles.dark : ''}`}
       onClick={onClick}
     >
       {children}
