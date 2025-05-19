@@ -2,8 +2,8 @@ import styles from './Checkout.module.css'
 import successImg from '@/assets/payment-successful.jpg'
 import successImgDark from '@/assets/payment-successful-dark.svg'
 
-import { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { CartContext, ThemeContext } from '@/providers/contexts'
 
 import CartItem from '@/components/CartItem'
@@ -28,9 +28,16 @@ export default function Checkout() {
   const [isPaid, setIsPaid] = useState(false)
   const { cart, utils } = useContext(CartContext)
   const { isDark } = useContext(ThemeContext)
+  const navigate = useNavigate()
   const successImgSrc = isDark ? successImgDark : successImg
   const isEmpty = cart.length === 0
   const totalPrice = utils.getTotal()
+
+  useEffect(() => {
+    if (isEmpty && !isPaid) {
+      navigate('/shop')
+    }
+  }, [isEmpty, isPaid, navigate])
 
   function handleConfirm() {
     setIsPaid(true)
@@ -53,11 +60,6 @@ export default function Checkout() {
           <Link className="link" to="/shop">
             <ChevronLeft /> Back to Shop
           </Link>
-        </>
-      )}
-      {isEmpty && !isPaid && (
-        <>
-          <h1 className="title">The cart is empty</h1>
         </>
       )}
       {!isEmpty && !isPaid && (
