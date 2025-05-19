@@ -13,9 +13,13 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const notify = () =>
   toast('Payment confirmed!', {
-    icon: <CheckCheck className={styles.toastIcon} />,
+    icon: <CheckCheck color="var(--money)" />,
     duration: 3000,
     position: 'bottom-right',
+    style: {
+      boxShadow: 'none',
+      backgroundColor: 'var(--primary-lighter)',
+    },
   })
 
 export default function Checkout() {
