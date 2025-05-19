@@ -1,0 +1,36 @@
+.alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  place-items: center;
+  gap: 16px;
+
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: var(--background);
+  border: none;
+  min-width: 300px;
+
+  & h1 {
+    font-size: 1.5rem;
+  }
+
+  &::backdrop {
+    backdrop-filter: blur(1px);
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: transform 0.25s;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+}

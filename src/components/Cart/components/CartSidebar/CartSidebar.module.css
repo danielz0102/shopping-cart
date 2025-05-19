@@ -47,8 +47,6 @@
 }
 
 .close-btn {
-  background: none;
-  border: none;
   position: fixed;
   top: var(--spacing);
   right: var(--spacing);

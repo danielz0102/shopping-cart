@@ -13,6 +13,7 @@
 
   --background: #fff;
   --text: #000;
+  --text-secondary: #666;
 }
 
 #root {
@@ -52,4 +53,8 @@ main {
 
 .money {
   color: var(--money);
+}
+
+.title {
+  font-weight: bold;
 }

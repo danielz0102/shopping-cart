@@ -19,6 +19,16 @@ test('receives an onClick function', () => {
   }).toThrow()
 })
 
+test('receives a className prop', () => {
+  expect(() => render(<Button className={1}>Test</Button>)).toThrow()
+  expect(() => {
+    render(<Button className={true}>Test</Button>)
+  }).toThrow()
+  expect(() => {
+    render(<Button className={{}}>Test</Button>)
+  }).toThrow()
+})
+
 test('throws an error if type is not a string', () => {
   expect(() =>
     render(
@@ -44,4 +54,9 @@ test('calls onClick function when clicked', async () => {
   await user.click(screen.getByRole('button', { name: /test/i }))
 
   expect(onClick).toHaveBeenCalled()
+})
+
+test('renders with the classname provided', () => {
+  render(<Button className="hola">Test</Button>)
+  expect(screen.getByRole('button')).toHaveClass('hola')
 })

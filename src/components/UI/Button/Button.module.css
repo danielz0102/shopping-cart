@@ -3,13 +3,16 @@
   --hover: var(--primary-light);
   --active: var(--primary-dark);
   --focus: var(--primary-light);
+  --text: #fff;
 
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
   background-color: var(--color);
-  color: #fff;
+  color: var(--text);
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   transition-property: background-color, box-shadow;
   transition-duration: 0.25s;
@@ -37,5 +40,5 @@
 
 .secondary {
   --color: var(--primary-light);
-  color: #000;
+  --text: var(--primary-dark);
 }

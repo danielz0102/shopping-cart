@@ -1,0 +1,47 @@
+.checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  padding-block: 16px;
+}
+
+.checkout:has(.success-message) {
+  gap: 4px;
+  padding: 0;
+
+  & .success-message {
+    margin-bottom: 16px;
+  }
+
+  & h1 {
+    margin-top: 200px;
+  }
+}
+
+.success-message {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.items-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 8px;
+}
+
+.button {
+  --size: 1.25rem;
+
+  font-size: var(--size);
+  width: 200px;
+}
+
+.check-icon {
+  font-size: var(--size);
+}
+
+.toast-icon {
+  color: var(--money);
+}
