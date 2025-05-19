@@ -1,5 +1,6 @@
 .sidebar {
   --spacing: 16px;
+  --shadow: rgba(0, 0, 0, 0.2);
 
   width: 30vw;
   min-width: 350px;
@@ -9,8 +10,8 @@
   top: 0;
   right: 0;
 
-  background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--background);
+  box-shadow: -2px 0 5px var(--shadow);
   border: none;
   padding: var(--spacing);
 
@@ -44,6 +45,10 @@
 .sidebar.hidden {
   transform: translateX(100%);
   display: none;
+}
+
+.sidebar.dark {
+  --shadow: rgba(255, 255, 255, 0.2);
 }
 
 .sidebar.empty {

@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { productSchema } from '@/schemas/product'
 
 import { useRef, useContext } from 'react'
-import { CartContext } from '@/providers/contexts'
+import { CartContext, ThemeContext } from '@/providers/contexts'
 
 import Counter from '@/components/UI/Counter'
 import { ShoppingBasket, CheckCheck } from 'lucide-react'
@@ -13,7 +13,7 @@ const notify = () =>
   toast('Product added to cart', {
     icon: <CheckCheck color="var(--money)" />,
     duration: 1000,
-    position: 'bottom-right',
+    position: 'bottom-left',
     style: {
       boxShadow: 'none',
       backgroundColor: 'var(--primary-lighter)',
@@ -22,6 +22,7 @@ const notify = () =>
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
+  const { isDark } = useContext(ThemeContext)
   const quantity = useRef(1)
 
   const productIsValid = productSchema.safeParse(product)
@@ -40,7 +41,7 @@ export default function Product({ product }) {
   }
 
   return (
-    <article className={styles.product}>
+    <article className={`${styles.product} ${isDark ? styles.dark : ''}`}>
       <div className={styles.imgContainer}>
         <img src={product.image} alt={product.title} />
       </div>

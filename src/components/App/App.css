@@ -14,6 +14,18 @@
   --background: #fff;
   --text: #000;
   --text-secondary: #666;
+
+  --link: var(--primary);
+  --link-active: var(--primary-light);
+}
+
+.dark {
+  --background: #030b24;
+  --text: #fff;
+  --text-secondary: #bbb;
+
+  --link: var(--primary-light);
+  --link-active: var(--primary);
 }
 
 #root {
@@ -30,11 +42,9 @@ main {
 }
 
 .link {
-  --color: var(--primary);
-
   display: flex;
   gap: 4px;
-  color: var(--color);
+  color: var(--link);
   position: relative;
   text-decoration: none;
   border-radius: 4px;
@@ -45,7 +55,7 @@ main {
   }
 
   &:active {
-    --color: var(--primary-light);
+    --link: var(--link-active);
   }
 
   &:focus-visible {
@@ -61,7 +71,7 @@ main {
   height: 1px;
   bottom: -3px;
   left: 3px;
-  background-color: var(--color);
+  background-color: var(--link);
   transform: scaleX(0);
   transition: transform 0.25s ease-out;
 }

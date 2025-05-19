@@ -1,9 +1,10 @@
 import styles from './Checkout.module.css'
 import successImg from '@/assets/payment-successful.jpg'
+import successImgDark from '@/assets/payment-successful-dark.svg'
 
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { CartContext } from '@/providers/contexts'
+import { CartContext, ThemeContext } from '@/providers/contexts'
 
 import CartItem from '@/components/CartItem'
 import PaymentAlert from './components/PaymentAlert'
@@ -25,8 +26,9 @@ const notify = () =>
 export default function Checkout() {
   const [showAlert, setShowAlert] = useState(false)
   const [isPaid, setIsPaid] = useState(false)
-
   const { cart, utils } = useContext(CartContext)
+  const { isDark } = useContext(ThemeContext)
+  const successImgSrc = isDark ? successImgDark : successImg
   const isEmpty = cart.length === 0
   const totalPrice = utils.getTotal()
 
@@ -42,8 +44,10 @@ export default function Checkout() {
       {isPaid && (
         <>
           <h1 className="title">Payment succesful</h1>
-          <div className={styles.imgContainer}>
-            <img src={successImg} alt="" />
+          <div
+            className={`${styles.imgContainer} ${isDark ? styles.dark : ''}`}
+          >
+            <img src={successImgSrc} alt="" />
           </div>
           <p className="subtitle">Thanks for your purchase</p>
           <Link className="link" to="/shop">
