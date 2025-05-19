@@ -30,25 +30,40 @@ main {
 }
 
 .link {
+  --color: var(--primary);
+
   display: flex;
   gap: 4px;
-  color: var(--primary);
+  color: var(--color);
+  position: relative;
   text-decoration: none;
   border-radius: 4px;
-  transition: transform 0.25s ease-out;
 
-  &:hover {
-    transform: scale(1.05);
+  &:hover::before,
+  &:focus-visible::before {
+    transform: scaleX(1);
   }
 
   &:active {
-    color: var(--primary-light);
+    --color: var(--primary-light);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--primary-light);
-    outline-offset: 2px;
+    outline: none;
   }
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 1px;
+  bottom: -3px;
+  left: 3px;
+  background-color: var(--color);
+  transform: scaleX(0);
+  transition: transform 0.25s ease-out;
 }
 
 .money {
