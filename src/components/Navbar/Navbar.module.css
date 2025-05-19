@@ -5,7 +5,9 @@
   justify-content: center;
   gap: var(--spacing);
   padding-block: 16px;
+}
 
+.navbar.animated {
   position: sticky;
   top: 0;
   animation: blur 0.25s ease-out forwards;

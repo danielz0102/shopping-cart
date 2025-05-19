@@ -2,7 +2,7 @@
 
 ## TODO
 
-- Fix navbar
+- Add empty state to sidebar
 - Add home page
 - Add dark mode
 - Deploy
