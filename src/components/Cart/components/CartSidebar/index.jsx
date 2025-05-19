@@ -32,7 +32,7 @@ export default function CartSidebar({ open = true, onClose }) {
       <CloseBtn className={styles.closeBtn} onClick={onClose} />
       {isEmpty ? (
         <>
-          <h2 className="title">The car is empty</h2>
+          <h2 className="title">The cart is empty</h2>
           <img src={emtpyCart} alt="" />
           <p className="subtitle">Add products in the shop</p>
         </>
