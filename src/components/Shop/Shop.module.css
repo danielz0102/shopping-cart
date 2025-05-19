@@ -9,3 +9,7 @@
   gap: 20px;
   padding: 16px;
 }
+
+.error {
+  text-align: center;
+}

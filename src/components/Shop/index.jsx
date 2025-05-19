@@ -13,7 +13,10 @@ export default function Shop() {
       {loading ? (
         <Spinner />
       ) : error ? (
-        <h1>Oops... something went wrong</h1>
+        <div className={styles.error}>
+          <h1>Oops... something went wrong 😢</h1>
+          <p>Try again later</p>
+        </div>
       ) : (
         <div className={styles.itemsGrid}>
           {products.map((product) => (
