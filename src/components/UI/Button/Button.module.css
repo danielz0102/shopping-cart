@@ -26,8 +26,10 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--focus);
-    outline-offset: 2px;
+    transition: none;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--focus);
+    outline: none;
   }
 }
 

@@ -5,15 +5,15 @@
   color: var(--primary);
   border-radius: 8px;
 
-  transition: transform 0.25s ease-out;
+  transition: transform 0.1s ease-in-out;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--primary-light);
-    outline-offset: 2px;
+    outline: none;
+    filter: drop-shadow(2px 2px 0 var(--primary-light));
   }
 }
 

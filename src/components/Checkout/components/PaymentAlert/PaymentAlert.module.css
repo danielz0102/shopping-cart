@@ -30,7 +30,12 @@
   right: 8px;
   transition: transform 0.25s;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     transform: rotate(90deg);
+  }
+
+  &:focus-visible {
+    outline: none;
   }
 }
