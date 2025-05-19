@@ -1,4 +1,5 @@
 import styles from './Checkout.module.css'
+import successImg from '@/assets/payment-successful.jpg'
 
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
@@ -24,11 +25,6 @@ export default function Checkout() {
   const { cart, utils } = useContext(CartContext)
   const isEmpty = cart.length === 0
   const totalPrice = utils.getTotal()
-  let title = isEmpty ? 'The cart is empty' : 'Checkout'
-
-  if (isPaid) {
-    title = 'Payment successful'
-  }
 
   function handleConfirm() {
     setIsPaid(true)
@@ -38,23 +34,32 @@ export default function Checkout() {
   }
 
   return (
-    <main className={styles.checkout}>
-      <h1 className="title">{title}</h1>
+    <main className={`${styles.checkout} ${isPaid ? styles.paid : ''}`}>
       {isPaid && (
         <>
-          <p className={styles.successMessage}>Thanks for your purchase</p>
+          <h1 className="title">Payment succesful</h1>
+          <div className={styles.imgContainer}>
+            <img src={successImg} alt="" />
+          </div>
+          <p className="subtitle">Thanks for your purchase</p>
           <Link className="link" to="/shop">
             <ChevronLeft /> Back to Shop
           </Link>
         </>
       )}
-      <ul className={styles.itemsList}>
-        {cart.map(({ product }) => (
-          <CartItem key={product.id} id={product.id} />
-        ))}
-      </ul>
-      {!isEmpty && (
+      {isEmpty && !isPaid && (
         <>
+          <h1 className="title">The cart is empty</h1>
+        </>
+      )}
+      {!isEmpty && !isPaid && (
+        <>
+          <h1 className="title">Checkout</h1>
+          <ul className={styles.itemsList}>
+            {cart.map(({ product }) => (
+              <CartItem key={product.id} id={product.id} />
+            ))}
+          </ul>
           <p>
             Total: <span className="money">${totalPrice.toFixed(2)}</span>
           </p>
