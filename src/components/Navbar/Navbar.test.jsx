@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import Navbar from '@/components/Navbar'
 
-vi.mock('../Cart', () => ({
+vi.mock('./components/Cart', () => ({
   default: () => <div data-testid="1">Cart</div>,
 }))
 

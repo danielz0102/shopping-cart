@@ -5,7 +5,7 @@ import { useContext } from 'react'
 
 import { CartContext } from '@/providers/contexts'
 
-import Counter from '@/components/Counter'
+import Counter from '@/components/UI/Counter'
 import Button from '@/components/UI/Button'
 import { Trash2 } from 'lucide-react'
 

@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { ShoppingCart } from 'lucide-react'
 
 import styles from './Cart.module.css'
-import CartSidebar from './components/CartSidebar'
+import Sidebar from '../Sidebar'
 import { CartContext } from '@/providers/contexts'
 
 export default function Cart() {
@@ -31,7 +31,7 @@ export default function Cart() {
           {quantity < 100 ? quantity : '+99'}
         </span>
       </button>
-      <CartSidebar open={sidebarOpen} onClose={handleClose} />
+      <Sidebar open={sidebarOpen} onClose={handleClose} />
     </>
   )
 }

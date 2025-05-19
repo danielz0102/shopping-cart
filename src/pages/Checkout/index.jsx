@@ -5,9 +5,9 @@ import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { CartContext } from '@/providers/contexts'
 
-import CartItem from '../Cart/components/CartItem'
+import CartItem from '@/components/CartItem'
 import PaymentAlert from './components/PaymentAlert'
-import Button from '../UI/Button'
+import Button from '@/components/UI/Button'
 import { Receipt, CheckCheck, ChevronLeft } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 

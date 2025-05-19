@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from './components/App'
-import Home from './components/Home'
-import Shop from './components/Shop'
-import Checkout from './components/Checkout'
+import Home from './pages/Home'
+import Shop from './pages/Shop'
+import Checkout from './pages/Checkout'
 
 export const router = createBrowserRouter([
   {

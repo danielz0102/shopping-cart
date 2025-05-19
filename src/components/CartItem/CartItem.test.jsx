@@ -15,7 +15,7 @@ const mockItem = {
   quantity: 2,
 }
 
-vi.mock('@/components/Counter', () => ({
+vi.mock('@/components/UI/Counter', () => ({
   default: (props) => <div data-testid="counter">{JSON.stringify(props)}</div>,
 }))
 

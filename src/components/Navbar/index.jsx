@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { House, Store } from 'lucide-react'
 
 import styles from './Navbar.module.css'
-import Cart from '../Cart'
+import Cart from './components/Cart'
 
 export default function Navbar() {
   const location = useLocation()

@@ -4,9 +4,9 @@ import { productSchema } from '@/schemas/product'
 import { useRef, useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
-import Counter from '../Counter'
+import Counter from '@/components/UI/Counter'
 import { ShoppingBasket } from 'lucide-react'
-import Button from '../UI/Button'
+import Button from '@/components/UI/Button'
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)

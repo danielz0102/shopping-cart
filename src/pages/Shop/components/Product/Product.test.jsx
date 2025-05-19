@@ -12,7 +12,7 @@ const mockProduct = {
   price: 19.99,
 }
 
-vi.mock('../Counter', () => ({
+vi.mock('@/components/UI/Counter', () => ({
   default: (props) => <div data-testid="counter">{JSON.stringify(props)}</div>,
 }))
 

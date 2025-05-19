@@ -19,11 +19,11 @@ const mockProducts = [
   },
 ]
 
-vi.mock('../Product', () => ({
+vi.mock('./components/Product', () => ({
   default: ({ product }) => <div data-testid={product.id}>{product.title}</div>,
 }))
 
-vi.mock('../UI/Spinner', () => ({
+vi.mock('@/components/UI/Spinner', () => ({
   default: () => <div>Loading...</div>,
 }))
 

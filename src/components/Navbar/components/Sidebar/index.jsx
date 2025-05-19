@@ -1,4 +1,4 @@
-import styles from './CartSidebar.module.css'
+import styles from './Sidebar.module.css'
 import emtpyCart from '@/assets/empty-cart.svg'
 
 import { Link } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { CartContext } from '@/providers/contexts'
 
 import { Receipt, Trash2 } from 'lucide-react'
-import CartItem from '../CartItem'
+import CartItem from '@/components/CartItem'
 import Button from '@/components/UI/Button'
 import CloseBtn from '@/components/UI/CloseBtn'
 

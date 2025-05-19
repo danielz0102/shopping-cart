@@ -2,8 +2,8 @@ import styles from './Shop.module.css'
 
 import { useProducts } from '@/hooks/useProducts'
 
-import Product from '../Product'
-import Spinner from '../UI/Spinner'
+import Product from './components/Product'
+import Spinner from '@/components/UI/Spinner'
 
 export default function Shop() {
   const { products, loading, error } = useProducts()

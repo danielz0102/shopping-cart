@@ -8,7 +8,7 @@ import CartProvider from '@/providers/CartProvider'
 import mockCart from '/tests/mocks/cart'
 import { vi } from 'vitest'
 
-vi.mock('../CartItem', () => ({
+vi.mock('@/components/CartItem', () => ({
   default: ({ id }) => <div data-testid="cart-item">Item {id}</div>,
 }))
 
