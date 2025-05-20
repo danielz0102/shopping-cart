@@ -1,5 +1,4 @@
 import styles from './Home.module.css'
-import landingImg from '@/assets/landing.svg'
 
 import { Link } from 'react-router-dom'
 import { ShoppingBasket } from 'lucide-react'
@@ -12,7 +11,7 @@ export default function Home() {
           Welcome to the Store That <strong>Sells Dreams</strong>{' '}
           <s>(and nothing else 🤣)</s>
         </h1>
-        <img className={styles.mobileImg} src={landingImg} alt="" />
+        <img className={styles.mobileImg} src="/landing.svg" alt="" />
         <p className={styles.description}>
           Browse all you want — we guarantee <strong>zero fulfillment</strong>,{' '}
           <strong>instant disappointment</strong>.
@@ -23,7 +22,7 @@ export default function Home() {
         </Link>
       </main>
       <aside>
-        <img className={styles.desktopImg} src={landingImg} alt="" />
+        <img className={styles.desktopImg} src="/landing.svg" alt="" />
       </aside>
     </main>
   )
