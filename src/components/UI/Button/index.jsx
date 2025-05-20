@@ -27,7 +27,7 @@ export default function Button({
     throw new TypeError('className prop must be a string')
   }
 
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
 
   return (
     <button

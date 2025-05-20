@@ -12,7 +12,7 @@ import CloseBtn from '@/components/UI/CloseBtn'
 
 export default function CartSidebar({ open = true, onClose }) {
   const { cart, utils } = useContext(CartContext)
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
 
   if (typeof open !== 'boolean') {
     throw new TypeError(`Prop 'open' must be a boolean`)

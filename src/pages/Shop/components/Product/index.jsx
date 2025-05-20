@@ -22,7 +22,7 @@ const notify = () =>
 
 export default function Product({ product }) {
   const { utils } = useContext(CartContext)
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
   const quantity = useRef(1)
 
   const productIsValid = productSchema.safeParse(product)

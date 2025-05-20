@@ -2,7 +2,7 @@ import { test, expect } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Cart from '@/components/Cart'
+import Cart from '@/components/Navbar/components/Cart'
 import CartProvider from '@/providers/CartProvider'
 
 test('opens the sidebar when is clicked', async () => {

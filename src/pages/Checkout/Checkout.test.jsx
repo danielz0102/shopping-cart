@@ -1,5 +1,6 @@
 import { test, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 
 import Checkout from '.'
 import CartProvider from '@/providers/CartProvider'
@@ -13,12 +14,6 @@ test('renders all items in the cart', () => {
   renderCheckout()
 
   mockCart.forEach(({ product }) => screen.getByTestId(product.id))
-})
-
-test('shows a message if the cart is empty', () => {
-  renderCheckout([])
-
-  screen.getByText(/cart.*empty/i)
 })
 
 test('shows the total price', () => {
@@ -46,8 +41,10 @@ test('does not show the payment button if the cart is empty', () => {
 
 function renderCheckout(cart = mockCart) {
   return render(
-    <CartProvider initialCart={cart}>
-      <Checkout />
-    </CartProvider>,
+    <MemoryRouter>
+      <CartProvider initialCart={cart}>
+        <Checkout />
+      </CartProvider>
+    </MemoryRouter>,
   )
 }

@@ -3,8 +3,8 @@ import { render, screen, getByRole, getAllByText } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import Product from '@/components/Product'
-import Cart from '@/components/Cart'
+import Product from '@/pages/Shop/components/Product'
+import Cart from '@/components/Navbar/components/Cart'
 import CartProvider from '@/providers/CartProvider'
 import { expect } from 'vitest'
 

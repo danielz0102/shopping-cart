@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import Checkout from '@/components/Checkout'
-import Cart from '@/components/Cart'
+import Checkout from '@/pages/Checkout'
+import Cart from '@/components/Navbar/components/Cart'
 import CartProvider from '@/providers/CartProvider'
 import mockCart from '/tests/mocks/cart'
 

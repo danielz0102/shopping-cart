@@ -8,7 +8,7 @@ import Sidebar from '../Sidebar'
 
 export default function Cart() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
   const { cart } = useContext(CartContext)
 
   const quantity = cart.reduce((acc, item) => acc + item.quantity, 0)

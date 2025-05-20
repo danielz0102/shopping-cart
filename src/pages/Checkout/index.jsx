@@ -27,7 +27,7 @@ export default function Checkout() {
   const [showAlert, setShowAlert] = useState(false)
   const [isPaid, setIsPaid] = useState(false)
   const { cart, utils } = useContext(CartContext)
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
   const navigate = useNavigate()
   const successImgSrc = isDark ? successImgDark : successImg
   const isEmpty = cart.length === 0

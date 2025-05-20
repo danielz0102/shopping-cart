@@ -9,7 +9,7 @@ import Cart from './components/Cart'
 import ThemeToggle from './components/ThemeToggle'
 
 export default function Navbar() {
-  const { isDark } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext) || { isDark: false }
   const location = useLocation()
   const isInShop = location.pathname === '/shop'
 
