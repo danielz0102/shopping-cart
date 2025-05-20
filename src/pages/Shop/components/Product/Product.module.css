@@ -1,6 +1,7 @@
 .product {
-  --background: #f9f9f9;
-  --shadow: #ccc;
+  --shadow: var(--primary-light);
+  --gradient-main: var(--primary-light);
+  --gradient-secondary: var(--primary-lighter);
 
   display: flex;
   flex-direction: column;
@@ -10,7 +11,11 @@
   gap: 16px;
   box-shadow: 5px 5px var(--shadow);
   border-radius: 8px;
-  background-color: var(--background);
+  background: linear-gradient(
+    135deg,
+    var(--gradient-main) 0%,
+    var(--gradient-secondary) 100%
+  );
 
   & h2 {
     font-weight: 600;
@@ -19,8 +24,9 @@
 }
 
 .product.dark {
-  --background: #111;
-  --shadow: #333;
+  --gradient-main: var(--primary-darker);
+  --gradient-secondary: var(--primary-dark);
+  --shadow: var(--primary-dark);
 }
 
 .img-container {

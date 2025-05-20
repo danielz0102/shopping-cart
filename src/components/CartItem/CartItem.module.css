@@ -3,7 +3,11 @@
   padding: 8px;
   border: none;
   border-radius: 8px;
-  background-color: var(--primary-lighter);
+  background: linear-gradient(
+    45deg,
+    var(--primary-light) 0%,
+    var(--primary-lighter) 100%
+  );
 
   & > * {
     flex: 1;
